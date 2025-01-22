@@ -8,6 +8,6 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 // create a GET route
 app.get("/test", (req, res) => {
   res.send({
-    message: "Your React frontend is connected to the Node-Express backend!",
+    message: "Your React  is connected to the Node-Express backend!",
   });
 });
