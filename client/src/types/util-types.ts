@@ -1,3 +1,4 @@
 export interface ModalRendererProps {
-  children: React.ReactElement;
+  class?: string;
+  children?: JSX.Element | JSX.Element[];
 }
