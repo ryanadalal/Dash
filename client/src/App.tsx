@@ -4,7 +4,7 @@ import UserProvider, { useUser } from "./UserProvider";
 
 function App() {
   const user = useUser().user;
-  if (user != null) {
+  if (user == null) {
     return <Login />;
   } else {
     return <Home />;
