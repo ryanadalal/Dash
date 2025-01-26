@@ -1,6 +1,7 @@
 import Home from "./App/Home";
 import Login from "./Login";
 import UserProvider, { useUser } from "./UserProvider";
+import "./styles/index.css";
 
 function App() {
   const user = useUser().user;

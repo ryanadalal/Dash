@@ -1,10 +1,11 @@
 import Body from "./Body";
 import NavBar from "./NavBar";
 import Tile from "./Tile";
+import "../styles/index.css";
 
 export default function Home() {
   return (
-    <div className="flex flex-col h-screen bg-slate-100 group md:s-size">
+    <div className="flex flex-col h-screen bg-bg-slate group md:s-size">
       <NavBar />
       <Body>
         <Tile class="min-w-60 lg:row-span-7 lg:col-span-2 hidden lg:block">

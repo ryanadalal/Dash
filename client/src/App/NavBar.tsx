@@ -1,6 +1,8 @@
+import "../styles/index.css";
+
 function NavBarList({ text }: { text: string }) {
   return (
-    <li className="flex items-center text-sm p-1 gap-x-2 text-slate-600 rounded-sm hover:bg-amber-400">
+    <li className="flex items-center text-sm p-2 gap-x-2 text-textslate rounded-sm hover:bg-realamber">
       <a href="#" className="flex items-center">
         {text}
       </a>
@@ -13,7 +15,7 @@ export default function NavBar() {
     <nav className="flex flex-wrap h-20 sticky items-center justify-between w-full px-4 py-2 bg-white shadow-md rounded-b-xl lg:px-30 lg:py-3">
       <a
         href="#"
-        className="mr-4 block cursor-pointer py-1.5 text-xl text-amber-400 font-semibold"
+        className="mr-4 block cursor-pointer py-1.5 text-xl text-realamber font-semibold"
       >
         Reals
       </a>
