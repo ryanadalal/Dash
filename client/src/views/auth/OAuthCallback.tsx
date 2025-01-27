@@ -1,9 +1,10 @@
-import { useEffect, useReducer } from "react";
-import { useUser } from "../../utilities/UserProvider";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { loginSuccess, loginFail, loginStart } from "../../utilities/UserSlice";
 import axios from "axios";
 
 export default function OAuthCallback() {
-  const dispatch = useUser().dispatch;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleCallback = async () => {
@@ -13,23 +14,22 @@ export default function OAuthCallback() {
           `http://localhost:5000/auth/callback/success`,
           { withCredentials: true }
         );
-        dispatch(response.user.data, useraction);
-        //dispatch(loginSuccess({ user: response.data.user }));
-        navigate("/");
-      } catch (error) {
+        dispatch(loginSuccess({ payload: response.data.user }));
+        //navigate("/");
+      } catch (error: any) {
         dispatch(
-          loginFailure({
+          loginFail({
             error:
               error.response?.data?.message ||
               "Login using Google failed! Please try using email and password!",
           })
         );
-        navigate("/login");
+        //navigate("/login");
       }
     };
 
     handleCallback();
-  }, [dispatch, navigate]);
+  }, [dispatch /*, navigate*/]);
 
   return (
     <div className="flex items-center justify-center h-screen">

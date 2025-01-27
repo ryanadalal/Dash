@@ -45,11 +45,11 @@ passport.use(
  * @param {Object} user - The authenticated user object.
  * @param {Function} done - The callback to call with the serialized user ID.
  */
-passport.serializeUser(function (user, cb) {
-  cb(null, user);
+passport.serializeUser(function (user, done) {
+  return done(null, user);
 });
-passport.deserializeUser(function (obj, cb) {
-  cb(null, obj);
+passport.deserializeUser(function (user, done) {
+  return done(null, user);
 });
 
 export default passport;

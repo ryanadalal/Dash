@@ -1,21 +1,14 @@
 import Home from "./home/Home";
 import Login from "./auth/Login";
-import UserProvider, { useUser } from "../utilities/UserProvider";
 import "../styles/index.css";
+import { useSelector } from "react-redux";
+import { User } from "../types/user-types";
 
-function App() {
-  const user = useUser().user;
-  if (user == null) {
+export default function App() {
+  const id = useSelector((state: User) => state.id);
+  if (id == null || id == undefined) {
     return <Login />;
   } else {
     return <Home />;
   }
-}
-
-export default function AppContexts() {
-  return (
-    <UserProvider>
-      <App />
-    </UserProvider>
-  );
 }

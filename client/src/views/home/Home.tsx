@@ -1,7 +1,7 @@
 import Body from "./Body";
 import NavBar from "../support/NavBar";
 import Tile from "./Tile";
-import "../styles/index.css";
+import "../../styles/index.css";
 
 export default function Home() {
   return (

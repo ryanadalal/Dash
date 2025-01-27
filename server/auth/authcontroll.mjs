@@ -10,9 +10,11 @@ const CLIENT_URL = process.env.CLIENT_URL;
  * 1. Redirect user to google oauth2 login page.
  *
  */
-export const googleAuth = passport.authenticate("google", {
-  scope: ["profile", "email"],
-});
+export const googleAuth = (req, res, next) => {
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })(req, res, next);
+};
 
 /**
  *
