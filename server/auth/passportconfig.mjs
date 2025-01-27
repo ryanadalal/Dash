@@ -7,7 +7,7 @@ dotenv.config();
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const BACKEND_URL = process.env.BACKEND_URL;
-const PORT = process.env.PORT;
+const PORT = process.env.SERVER_PORT;
 
 passport.use(
   "google",
@@ -29,7 +29,7 @@ passport.use(
        * TODO create a user in the databse based off the google profile provided
        */
 
-      userProfile = profile;
+      const userProfile = profile;
       return done(null, userProfile, { message: "Logging in..." });
     }
   )
