@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loginSuccess, loginFail, loginStart } from "../../utilities/UserSlice";
+import { loginSuccess, loginFail, loginStart } from "../../utilities/userSlice";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function OAuthCallback() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleCallback = async () => {
+      console.log("handleCallback");
       try {
         dispatch(loginStart());
         const response = await axios.get(
@@ -15,7 +18,7 @@ export default function OAuthCallback() {
           { withCredentials: true }
         );
         dispatch(loginSuccess({ payload: response.data.user }));
-        //navigate("/");
+        navigate("/home");
       } catch (error: any) {
         dispatch(
           loginFail({
@@ -24,12 +27,12 @@ export default function OAuthCallback() {
               "Login using Google failed! Please try using email and password!",
           })
         );
-        //navigate("/login");
+        navigate("/login");
       }
     };
 
     handleCallback();
-  }, [dispatch /*, navigate*/]);
+  }, [dispatch, navigate]);
 
   return (
     <div className="flex items-center justify-center h-screen">
