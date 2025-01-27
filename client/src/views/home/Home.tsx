@@ -1,5 +1,5 @@
 import Body from "./Body";
-import NavBar from "./NavBar";
+import NavBar from "../support/NavBar";
 import Tile from "./Tile";
 import "../styles/index.css";
 
