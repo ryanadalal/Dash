@@ -31,7 +31,12 @@ export const googleAuthCallback = (req, res, next) => {
     successRedirect: CLIENT_URL + "/oauth/callback",
     failureRedirect: CLIENT_URL + "/login",
     failureFlash: true,
-  })(req, res, next);
+  })(req, res, next); /*{
+    req.session.save( ()=>
+      {req.session.logged_in=true; req.session.user = {id:req.body.id, email:req.body.email, name:req.body.name};
+      }
+    );
+  }; COULD PUT SESSION STORE HERE?;*/
 };
 
 /**

@@ -45,11 +45,29 @@ passport.use(
  * @param {Object} user - The authenticated user object.
  * @param {Function} done - The callback to call with the serialized user ID.
  */
-passport.serializeUser(function (user, done) {
-  return done(null, user);
+passport.serializeUser(function (user, cb) {
+  console.log("serializing");
+  process.nextTick(function () {
+    return cb(null, user);
+  });
 });
-passport.deserializeUser(function (user, done) {
-  return done(null, user);
+passport.deserializeUser(function (req, user, cb) {
+  console.log("deserializing");
+  process.nextTick(function () {
+    return cb(null, user);
+  });
+  /*
+  store.findUser(null, { userName: user.email }, async (err, existingUser) => {
+    if (err) {
+      return cb(err);
+    }
+
+    if (existingUser) {
+      return cb(null, existingUser); // return valid object if user exists in our database
+    } else {
+      return cb(null, false); // return false if user doesn't exists
+    }
+  });*/
 });
 
 export default passport;
