@@ -1,4 +1,6 @@
+import { useSelector } from "react-redux";
 import "../../styles/index.css";
+import { User } from "../../types/user-types";
 
 function NavBarList({ text }: { text: string }) {
   return (
@@ -9,8 +11,12 @@ function NavBarList({ text }: { text: string }) {
     </li>
   );
 }
+function PhotoList({ photo }: { photo: string }) {
+  return <img src={photo} className="h-10 w-10 rounded-full" />;
+}
 
 export default function NavBar() {
+  const photo = useSelector((state: User) => state.picture);
   return (
     <nav className="flex flex-wrap h-20 sticky items-center justify-between w-full px-4 py-2 bg-white shadow-md rounded-b-xl lg:px-30 lg:py-3">
       <a
@@ -24,6 +30,7 @@ export default function NavBar() {
         <NavBarList text="Verify"></NavBarList>
         <NavBarList text="Accounts"></NavBarList>
         <NavBarList text="Settings"></NavBarList>
+        {photo != undefined ? <PhotoList photo={photo}></PhotoList> : null}
       </ul>
     </nav>
   );

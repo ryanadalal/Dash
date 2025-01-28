@@ -54,8 +54,8 @@ export const authCallbackSuccess = (req, res, next) => {
     user: {
       id: req.user.id,
       name: req.user.name,
-      email: req.user.email,
-      profilePicture: req.user.picture,
+      email: req.user.emails,
+      profilePicture: req.user.photos,
     },
   });
 };

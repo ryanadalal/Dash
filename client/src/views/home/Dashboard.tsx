@@ -3,7 +3,7 @@ import NavBar from "../support/NavBar";
 import Tile from "./Tile";
 import "../../styles/index.css";
 
-export default function Home() {
+export default function Dashboard() {
   return (
     <div className="flex flex-col h-screen bg-bg-slate group md:s-size">
       <NavBar />

@@ -30,7 +30,6 @@ passport.use(
        */
 
       const userProfile = profile;
-      console.log(userProfile);
       return done(null, userProfile, { message: "Logging in..." });
     }
   )
@@ -47,13 +46,11 @@ passport.use(
  * @param {Function} done - The callback to call with the serialized user ID.
  */
 passport.serializeUser(function (user, cb) {
-  console.log("serializing");
   process.nextTick(function () {
     return cb(null, user);
   });
 });
 passport.deserializeUser(function (req, user, cb) {
-  console.log("deserializing");
   process.nextTick(function () {
     return cb(null, user);
   });

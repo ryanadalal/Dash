@@ -1,25 +1,28 @@
-import Home from "./home/Home";
+import Dashboard from "./home/Dashboard";
 import Login from "./auth/Login";
 import "../styles/index.css";
-import { useSelector } from "react-redux";
-import { User } from "../types/user-types";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import OAuthCallback from "./auth/OAuthCallback";
+import AuthProtected from "./auth/AuthProtected";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AuthProtected />,
+    children: [
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "*", element: <Navigate to="/dashboard" replace={true} /> },
+      { path: "", element: <Navigate to="/dashboard" replace={true} /> },
+    ],
+  },
+  { path: "/login", element: <Login /> },
+  { path: "/oauth/callback", element: <OAuthCallback /> },
+]);
 
 export default function App() {
-  const id = useSelector((state: User) => state.id);
-  console.log(id + " id in app");
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/home"
-          element={id == null || id == undefined ? <Login /> : <Home />}
-        />
-        <Route path="/oauth/callback" element={<OAuthCallback />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }

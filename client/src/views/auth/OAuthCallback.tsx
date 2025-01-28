@@ -9,9 +9,7 @@ export default function OAuthCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("using effect");
     const handleCallback = async () => {
-      console.log("handleCallback");
       try {
         dispatch(loginStart());
         const response = await axios.get(
@@ -19,10 +17,8 @@ export default function OAuthCallback() {
           { withCredentials: true }
           /*Now until the session is valid the browser will attach the cookies as header in all requests from that origin.*/
         );
-        console.log("response axios");
-        console.log(response.data);
         dispatch(loginSuccess(response.data.user));
-        navigate("/home");
+        navigate("/dashboard");
       } catch (error: any) {
         dispatch(
           loginFail({
