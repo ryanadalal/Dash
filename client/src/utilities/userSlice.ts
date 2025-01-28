@@ -12,7 +12,6 @@ const userSlice = createSlice({
   reducers: {
     loginStart: (state) => {
       (state.loading = true), (state.id = undefined);
-      //add delay329849032849028309
     },
     loginSuccess: (state, param) => {
       const { payload } = param;
@@ -48,8 +47,3 @@ const userSlice = createSlice({
 const { actions, reducer } = userSlice;
 export const { loginSuccess, logout, loginStart, loginFail } = actions;
 export default reducer;
-
-//https://medium.com/geekculture/understanding-createslice-in-redux-toolkit-reactjs-eca8d20f45d7
-//https://www.geeksforgeeks.org/explain-reducers-in-redux/
-//https://developer.okta.com/blog/2022/08/29/react-typescript-redux
-//https://stackoverflow.com/questions/59129691/passing-oauth-user-data-back-to-react-via-node-passport-authentication

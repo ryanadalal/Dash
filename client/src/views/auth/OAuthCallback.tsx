@@ -15,7 +15,6 @@ export default function OAuthCallback() {
         const response = await axios.get(
           "http://localhost:5000/auth/callback/success",
           { withCredentials: true }
-          /*Now until the session is valid the browser will attach the cookies as header in all requests from that origin.*/
         );
         dispatch(loginSuccess(response.data.user));
         navigate("/dashboard");
