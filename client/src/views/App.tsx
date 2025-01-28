@@ -8,11 +8,7 @@ import OAuthCallback from "./auth/OAuthCallback";
 
 export default function App() {
   const id = useSelector((state: User) => state.id);
-  /*if (id == null || id == undefined) {
-    return <Login />;
-  } else {
-    return <Home />;
-  }*/
+  console.log(id + " id in app");
   return (
     <BrowserRouter>
       <Routes>

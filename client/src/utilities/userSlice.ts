@@ -12,18 +12,22 @@ const userSlice = createSlice({
   reducers: {
     loginStart: (state) => {
       (state.loading = true), (state.id = undefined);
+      console.log("starting login");
+      //add delay329849032849028309
     },
     loginSuccess: (state, param) => {
       const { payload } = param;
+      console.log("login succes ");
+      console.log(payload);
       state.email = payload.email;
-      state.firstName = payload.email;
-      state.lastName = payload.email;
-      state.id = payload.email;
+      state.firstName = payload.name.givenName;
+      state.lastName = payload.name.familyName;
+      state.id = payload.id;
       state.loading = false;
     },
     loginFail: (state, param) => {
       const { payload } = param;
-      console.log(payload);
+      console.log("fail " + payload);
       state.loading = false;
       state.id = undefined;
     },

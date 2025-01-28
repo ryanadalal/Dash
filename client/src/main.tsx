@@ -2,9 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./views/App.tsx";
 import { Provider } from "react-redux";
-import reducer from "./utilities/UserSlice.ts";
 import { configureStore } from "@reduxjs/toolkit";
 import "./styles/index.css";
+import reducer from "./utilities/userSlice.ts";
 
 const store = configureStore({ reducer: reducer });
 

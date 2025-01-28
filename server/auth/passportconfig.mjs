@@ -30,6 +30,7 @@ passport.use(
        */
 
       const userProfile = profile;
+      console.log(userProfile);
       return done(null, userProfile, { message: "Logging in..." });
     }
   )
