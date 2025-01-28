@@ -1,11 +1,20 @@
+import { useSelector } from "react-redux";
 import GoogleSignInPng from "../../assets/googlesignin/real.png";
 import "../../styles/index.css";
+import { User } from "../../types/user-types";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Login() {
-  /**
-   * TODO add something to track loading like
-   * const loading = useUser()...
-   */
+  const user_id = useSelector((state: User) => state.id);
+  const user_loading = useSelector((state: User) => state.loading);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user_id != undefined && !user_loading) {
+      console.log("logged in redirecting...");
+      navigate("/dashboard");
+    }
+  }, [user_id, user_loading, navigate]);
 
   return (
     <div className="h-screen flex bg-bgslate justify-center items-center">
