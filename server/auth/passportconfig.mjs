@@ -37,35 +37,34 @@ passport.use(
 
 /**
  * Serialize the user for the session.
+ * Prevent the need for transmitting credentials on every request instead send the cookie
  *
  * This function is called when a user is authenticated. It:
  * 1. Takes the user object and stores the user in the session.
  * 2. This is used to identify the user in subsequent requests.
  *
  * @param {Object} user - The authenticated user object.
- * @param {Function} done - The callback to call with the serialized user ID.
+ * @param {Function} cb - The callback to call with the serialized user ID.
  */
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
     return cb(null, user);
   });
 });
-passport.deserializeUser(function (req, user, cb) {
+/**
+ * Deserialize the user for the session.
+ * Use the cookies to idenitfy the user
+ *
+ * Restore the user to req.user
+ * 1. identify the user for subsequent requests.
+ *
+ * @param {Object} user - The authenticated user object.
+ * @param {Function} cb - The callback to call with the serialized user ID.
+ */
+passport.deserializeUser(function (user, cb) {
   process.nextTick(function () {
     return cb(null, user);
   });
-  /*
-  store.findUser(null, { userName: user.email }, async (err, existingUser) => {
-    if (err) {
-      return cb(err);
-    }
-
-    if (existingUser) {
-      return cb(null, existingUser); // return valid object if user exists in our database
-    } else {
-      return cb(null, false); // return false if user doesn't exists
-    }
-  });*/
 });
 
 export default passport;

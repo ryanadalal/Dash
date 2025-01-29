@@ -3,6 +3,11 @@ import { User } from "../../types/user-types";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+/**
+ * ensures that users accessing account restricted sections are logged in
+ * if a user is not logged in they are redirected to the login page
+ * @returns an empty object for other components to build on top of
+ */
 export default function AuthProtected() {
   const user_id = useSelector((state: User) => state.id);
   const user_loading = useSelector((state: User) => state.loading);

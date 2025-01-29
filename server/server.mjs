@@ -10,7 +10,6 @@ const SESSION_SECRET = process.env.SESSION_SECRET;
 const CLIENT_URL = process.env.CLIENT_URL;
 
 const app = express();
-// Add headers before the routes are defined
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
   res.setHeader("Access-Control-Allow-Origin", CLIENT_URL);
@@ -26,19 +25,19 @@ app.use(function (req, res, next) {
   );
   // true: require cookies to be sent with the request for using with API and the session
   res.setHeader("Access-Control-Allow-Credentials", true);
-
   // Pass to next layer of middleware
   next();
 });
+// start a session to allow cookies to be accesssed
 app.use(
   session({
     secret: SESSION_SECRET,
-    //store, Pgsession storage
     cookie: { secure: false },
     resave: false,
     saveUninitialized: true,
   })
 );
+// initalize passports session which is dependent on express session
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/auth", authrouter);

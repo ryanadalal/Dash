@@ -9,6 +9,9 @@ const CLIENT_URL = process.env.CLIENT_URL;
  * Initiates google oauth2:
  * 1. Redirect user to google oauth2 login page.
  *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the authentication result.
+ * @param {Function} next - The next middleware function in the stack (not used in this function).
  */
 export const googleAuth = (req, res, next) => {
   passport.authenticate("google", {

@@ -12,6 +12,7 @@ export default function OAuthCallback() {
     const handleCallback = async () => {
       try {
         dispatch(loginStart());
+        // request the user data from the backend and pass it the cookies for the session
         const response = await axios.get(
           "http://localhost:5000/auth/callback/success",
           { withCredentials: true }

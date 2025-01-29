@@ -9,6 +9,7 @@ export default function Login() {
   const user_id = useSelector((state: User) => state.id);
   const user_loading = useSelector((state: User) => state.loading);
   const navigate = useNavigate();
+  // check if the user is logged in already and renavigate to dashboard if they are
   useEffect(() => {
     if (user_id != undefined && !user_loading) {
       console.log("logged in redirecting...");
