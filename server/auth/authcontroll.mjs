@@ -1,7 +1,6 @@
+import "dotenv/config";
 import passport from "./passportconfig.mjs";
-import dotenv from "dotenv";
 
-dotenv.config();
 const CLIENT_URL = process.env.CLIENT_URL;
 /**
  * Initiate Google authentication.

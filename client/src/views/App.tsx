@@ -1,13 +1,15 @@
-import Dashboard from "./home/Dashboard";
-import Login from "./auth/Login";
-import "../styles/index.css";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import OAuthCallback from "./auth/OAuthCallback";
-import AuthProtected from "./auth/AuthProtected";
+
+import "../styles/index.css";
+
+import Login from "./auth/Login.tsx";
+import OAuthCallback from "./auth/OAuthCallback.tsx";
+import AuthProtected from "./auth/AuthProtected.tsx";
+import Dashboard from "./home/Dashboard.tsx";
 
 const router = createBrowserRouter([
   {

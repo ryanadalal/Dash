@@ -2,19 +2,30 @@
 # root folder /, run 'docker-compose up'.
 # Refer to /README.md for more information.
 
-# Docker Compose File Format Version.
-# version: "3.7"
-
+#
+#
+#
+# SHOULD REPLACE ENV WITH SECRETS
+# https://docs.docker.com/compose/how-tos/use-secrets/
+#
+#
 services:
   server:
     build:
       context: ./server
+    # volumes - Allows the data in the volumes to persist between docker sessions
     volumes:
-      - ./server:/app
-      - /app/node_modules # Required to persist node_modules between container stop/starts.
+      - /app/node_modules
     ports:
       - 5000:5000
-    env_file: ./server/.env
+    #env_file: ./server/.env
+    environment:
+      - SERVER_PORT=${SERVER_PORT}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - CLIENT_URL=${CLIENT_URL}
+      - BACKEND_URL=${BACKEND_URL}
+      - SESSION_SECRET=${SESSION_SECRET}
 
   client:
     build:
@@ -22,10 +33,9 @@ services:
     # This will force server service to build and start before client.
     depends_on:
       - server
-    # THIS IS FOR CONNECTING THE DOCKER TO LOCAL DEV AND CAUSED THE WEIRD HTML WRONG FILE ISSUE
-    #volumes:
-    #  - ./client:/home/static
-    #  - /app/node_modules # Required to persist node_modules between container stop/starts.
+    # volumes - Allows the data in the volumes to persist between docker sessions
+    volumes:
+      - /app/node_modules
     ports:
       - 8080:8080
     environment:

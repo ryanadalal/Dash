@@ -1,4 +1,4 @@
-import { ModalRendererProps } from "../../types/util-types";
+import { ModalRendererProps } from "../../types/util-types.ts";
 
 export default function Body(props: ModalRendererProps) {
   return (

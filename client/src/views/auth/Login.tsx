@@ -1,9 +1,11 @@
-import { useSelector } from "react-redux";
-import GoogleSignInPng from "../../assets/googlesignin/real.png";
-import "../../styles/index.css";
-import { User } from "../../types/user-types";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import "../../styles/index.css";
+import GoogleSignInPng from "../../assets/googlesignin/real.png";
+
+import { User } from "../../types/user-types.ts";
 
 export default function Login() {
   const user_id = useSelector((state: User) => state.id);

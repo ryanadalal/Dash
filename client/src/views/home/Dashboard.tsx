@@ -1,7 +1,8 @@
-import Body from "./Body";
-import NavBar from "../support/NavBar";
-import Tile from "./Tile";
 import "../../styles/index.css";
+
+import Body from "./Body.tsx";
+import NavBar from "../support/NavBar.tsx";
+import Tile from "./Tile.tsx";
 
 export default function Dashboard() {
   return (

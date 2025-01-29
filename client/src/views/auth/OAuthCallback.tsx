@@ -1,8 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loginSuccess, loginFail, loginStart } from "../../utilities/userSlice";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import {
+  loginSuccess,
+  loginFail,
+  loginStart,
+} from "../../utilities/userSlice.ts";
 
 export default function OAuthCallback() {
   const dispatch = useDispatch();

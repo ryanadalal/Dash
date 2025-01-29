@@ -1,10 +1,13 @@
-import dotenv from "dotenv";
+/*if (process.env.NODE_ENV == "dev") {
+  console.log("dev mode enabled");
+  require("dotenv").config({ path: __dirname + "./.env" });
+}*/
+import "dotenv/config";
 import express from "express";
 import session from "express-session";
 import passport from "passport";
 import authrouter from "./auth/authroutes.mjs";
 
-dotenv.config();
 const PORT = process.env.SERVER_PORT;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 const CLIENT_URL = process.env.CLIENT_URL;

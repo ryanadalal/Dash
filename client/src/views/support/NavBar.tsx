@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
+
 import "../../styles/index.css";
-import { User } from "../../types/user-types";
+
+import { User } from "../../types/user-types.ts";
 
 function NavBarList({ text }: { text: string }) {
   return (

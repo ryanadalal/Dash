@@ -1,7 +1,8 @@
-import { useSelector } from "react-redux";
-import { User } from "../../types/user-types";
-import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Outlet, useNavigate } from "react-router-dom";
+
+import { User } from "../../types/user-types.ts";
 
 /**
  * ensures that users accessing account restricted sections are logged in

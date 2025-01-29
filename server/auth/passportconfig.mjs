@@ -1,8 +1,6 @@
-import dotenv from "dotenv";
+import "dotenv/config";
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
-
-dotenv.config();
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;

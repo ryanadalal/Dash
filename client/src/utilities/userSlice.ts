@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import { User } from "../types/user-types";
 
 // an empty initial user for the slice
