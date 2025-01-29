@@ -4,8 +4,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import "../styles/index.css";
-
 import Login from "./auth/Login.tsx";
 import OAuthCallback from "./auth/OAuthCallback.tsx";
 import AuthProtected from "./auth/AuthProtected.tsx";

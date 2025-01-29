@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import "../../styles/index.css";
 import GoogleSignInPng from "../../assets/googlesignin/real.png";
 
 import { User } from "../../types/user-types.ts";

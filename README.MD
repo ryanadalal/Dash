@@ -3,6 +3,8 @@ https://vite.dev/guide/static-deploy.html
 docker stop $(docker ps -a -q)
 docker rm -fv $(docker ps -aq)
 
+docker compose --env-file ./server/.env up --build
+
 docker compose up -d --no-deps --build
 
 DONT USE PORT 80 insecure have main system port forward 80 to 8080
