@@ -27,42 +27,8 @@ passport.use(
        * TODO create a user in the databse based off the google profile provided
        */
 
-      const userProfile = profile;
-      return done(null, userProfile, { message: "Logging in..." });
+      return done(null, profile, { message: "Logging in..." });
     }
   )
 );
-
-/**
- * Serialize the user for the session.
- * Prevent the need for transmitting credentials on every request instead send the cookie
- *
- * This function is called when a user is authenticated. It:
- * 1. Takes the user object and stores the user in the session.
- * 2. This is used to identify the user in subsequent requests.
- *
- * @param {Object} user - The authenticated user object.
- * @param {Function} cb - The callback to call with the serialized user ID.
- */
-passport.serializeUser(function (user, cb) {
-  process.nextTick(function () {
-    return cb(null, user);
-  });
-});
-/**
- * Deserialize the user for the session.
- * Use the cookies to idenitfy the user
- *
- * Restore the user to req.user
- * 1. identify the user for subsequent requests.
- *
- * @param {Object} user - The authenticated user object.
- * @param {Function} cb - The callback to call with the serialized user ID.
- */
-passport.deserializeUser(function (user, cb) {
-  process.nextTick(function () {
-    return cb(null, user);
-  });
-});
-
 export default passport;

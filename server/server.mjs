@@ -4,12 +4,11 @@
 }*/
 import "dotenv/config";
 import express from "express";
-import session from "express-session";
 import passport from "passport";
 import authrouter from "./auth/authroutes.mjs";
+import protectedrouter from "./protected/protecedroutes.mjs";
 
 const PORT = process.env.SERVER_PORT;
-const SESSION_SECRET = process.env.SESSION_SECRET;
 const CLIENT_URL = process.env.CLIENT_URL;
 
 const app = express();
@@ -31,18 +30,9 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
-// start a session to allow cookies to be accesssed
-app.use(
-  session({
-    secret: SESSION_SECRET,
-    cookie: { secure: false },
-    resave: false,
-    saveUninitialized: true,
-  })
-);
 // initalize passports session which is dependent on express session
 app.use(passport.initialize());
-app.use(passport.session());
 app.use("/auth", authrouter);
+app.use("/protected", protectedrouter);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
