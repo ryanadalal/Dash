@@ -38,7 +38,7 @@ export const googleAuthCallback = (req, res) => {
 
   res.cookie("token", token, {
     httpOnly: true, // prevent client side js access
-    secure: false && process.env.NODE_ENV === "production", // use secure tokens for production
+    secure: process.env.NODE_ENV === "production", // use secure tokens for production
     sameSite: "strict",
     maxAge: 3600000, // token expires in 1 hour
   });

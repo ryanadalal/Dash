@@ -29,4 +29,8 @@ app.use(passport.initialize());
 app.use("/auth", authrouter);
 app.use("/protected", protectedrouter);
 
+// Health check route
+app.get("/health", (req, res) => {
+  res.status(200).json({ message: "Server is healthy!" });
+});
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
