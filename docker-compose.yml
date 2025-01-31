@@ -26,6 +26,7 @@ services:
       - CLIENT_URL=${CLIENT_URL}
       - BACKEND_URL=${BACKEND_URL}
       - SESSION_SECRET=${SESSION_SECRET}
+      - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 30s
