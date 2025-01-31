@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: CLIENT_URL, // Your frontend URL
+    origin: CLIENT_URL,
     credentials: true, // Allows sending cookies
   })
 );
