@@ -32,13 +32,14 @@ export const googleAuth = (req, res, next) => {
  * @param {Object} res - response object to redirect user
  */
 export const googleAuthCallback = (req, res) => {
-  const token = jwt.sign({ id: req.user.id }, SESSION_SECRET, {
+  const token = jwt.sign({ user: req.user }, SESSION_SECRET, {
     expiresIn: "1h",
   });
 
   res.cookie("token", token, {
     httpOnly: true, // prevent client side js access
-    secure: process.env.NODE_ENV === "production", // use secure tokens for production
+    secure: false && process.env.NODE_ENV === "production", // use secure tokens for production
+    sameSite: "strict",
     maxAge: 3600000, // token expires in 1 hour
   });
 
