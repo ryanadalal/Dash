@@ -1,6 +1,7 @@
 import "dotenv/config";
 import passport from "./passportconfig.mjs";
 import jwt from "jsonwebtoken";
+import User from "../mongo/models/user.mjs";
 
 const CLIENT_URL = process.env.CLIENT_URL;
 const SESSION_SECRET = process.env.SESSION_SECRET;
@@ -31,17 +32,41 @@ export const googleAuth = (req, res, next) => {
  * @param {Object} req - request object with google oauth2 callback data
  * @param {Object} res - response object to redirect user
  */
-export const googleAuthCallback = (req, res) => {
-  const token = jwt.sign({ user: req.user }, SESSION_SECRET, {
-    expiresIn: "1h",
-  });
+export const googleAuthCallback = async (req, res) => {
+  const id = req.user.id;
+  const firstName = req.user.name.givenName;
+  const lastName = req.user.name.familyName;
+  const email = req.user.emails[0].value;
+  const photo = req.user.photos[0].value;
 
-  res.cookie("token", token, {
-    httpOnly: true, // prevent client side js access
-    secure: process.env.NODE_ENV === "production", // use secure tokens for production
-    sameSite: "strict",
-    maxAge: 3600000, // token expires in 1 hour
-  });
+  User.findOne({ id: id })
+    .then((user) => {
+      if (user) return user;
 
-  res.redirect(CLIENT_URL + "/oauth/callback");
+      return User.create({
+        id: id,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        photo: photo,
+      });
+    })
+    .then((user) => {
+      const token = jwt.sign({ user: user.id }, SESSION_SECRET, {
+        expiresIn: "1h",
+      });
+
+      res.cookie("token", token, {
+        httpOnly: true, // prevent client side js access
+        secure: process.env.NODE_ENV === "production", // use secure tokens for production
+        sameSite: "strict",
+        maxAge: 3600000, // token expires in 1 hour
+      });
+
+      res.redirect(CLIENT_URL + "/oauth/callback");
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(400).json({ message: `Error creating user ${error}` });
+    });
 };
