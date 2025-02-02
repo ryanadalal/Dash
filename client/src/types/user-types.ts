@@ -9,7 +9,7 @@
  */
 export type User = {
   loading: boolean;
-  googleId?: number;
+  id?: number;
   firstName?: string;
   lastName?: string;
   email?: string;

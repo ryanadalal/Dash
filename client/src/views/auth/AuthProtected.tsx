@@ -10,15 +10,15 @@ import { User } from "../../types/user-types.ts";
  * @returns an empty object for other components to build on top of
  */
 export default function AuthProtected() {
-  const googleId = useSelector((state: User) => state.googleId);
+  const id = useSelector((state: User) => state.id);
   const user_loading = useSelector((state: User) => state.loading);
   const navigate = useNavigate();
   useEffect(() => {
-    if (googleId == undefined || user_loading) {
+    if (id == undefined || user_loading) {
       console.log("not logged in redirecting...");
       navigate("/login");
     }
-  }, [googleId, user_loading, navigate]);
+  }, [id, user_loading, navigate]);
 
   return <Outlet />;
 }

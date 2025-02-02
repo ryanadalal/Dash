@@ -1,34 +1,25 @@
-import "dotenv/config";
 import passport from "passport";
-import { Strategy } from "passport-google-oauth20";
-
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const BACKEND_URL = process.env.BACKEND_URL;
-const PORT = process.env.SERVER_PORT;
+import LocalStrategy from "passport-local";
 
 passport.use(
-  "google",
-  new Strategy(
-    {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: BACKEND_URL + ":" + PORT + "/auth/google/callback",
-    },
-    /*
-     * verify users
-     * @param {string} accessToken - The access token provided by Google.
-     * @param {string} refreshToken - The refresh token provided by Google.
-     * @param {Object} profile - The user's profile information from Google.
-     * @param {Function} done - The callback to call with the authentication result.
-     */
-    function (accessToken, refreshToken, profile, done) {
-      /*
-       * TODO create a user in the databse based off the google profile provided
-       */
+  "local",
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, done) => {
+      try {
+        const user = await User.findOne({ email: email });
 
-      return done(null, profile, { message: "Logging in..." });
+        if (!user) return done(null, false, { message: "invalid credentials" });
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(400).send("invalid credentials");
+
+        return done(null, user);
+      } catch (error) {
+        return done(error);
+      }
     }
   )
 );
+
 export default passport;

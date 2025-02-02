@@ -4,10 +4,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Login from "./auth/Login.tsx";
 import OAuthCallback from "./auth/OAuthCallback.tsx";
 import AuthProtected from "./auth/AuthProtected.tsx";
 import Dashboard from "./home/Dashboard.tsx";
+import Register from "./auth/Register.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
       { path: "", element: <Navigate to="/dashboard" replace={true} /> },
     ],
   },
-  { path: "/login", element: <Login /> },
+  { path: "/login", element: <Register /> },
   { path: "/oauth/callback", element: <OAuthCallback /> },
 ]);
 

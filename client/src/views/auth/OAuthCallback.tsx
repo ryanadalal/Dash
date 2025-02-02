@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import {
   loginSuccess,
   loginFail,
   loginStart,
 } from "../../utilities/userSlice.ts";
+import { getUserData } from "../../utilities/userAPI.ts";
 
 export default function OAuthCallback() {
   const dispatch = useDispatch();
@@ -18,12 +18,7 @@ export default function OAuthCallback() {
       try {
         dispatch(loginStart());
 
-        const response = await axios.get(
-          "http://localhost:5000/protected/callback/success",
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await getUserData();
         dispatch(loginSuccess(response.data.user));
         navigate("/dashboard");
       } catch (error: any) {

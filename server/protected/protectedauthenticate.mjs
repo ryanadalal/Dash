@@ -1,26 +1,25 @@
-import jwt from "jsonwebtoken";
+import jwt, { decode } from "jsonwebtoken";
 import User from "../services/mongo/models/user.mjs";
 
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
 export default async function authenticateJWT(req, res, next) {
+  // Token from cookies or Authorization header
+  const token = req.cookies.token;
+  // if no token, return forbidden
+  if (!token)
+    return res
+      .status(401)
+      .json({ message: "unauthorized - missing jwt signin token" });
   let decoded;
   try {
-    // Token from cookies or Authorization header
-    const token = req.cookies.token;
-    // if no token, return forbidden
-    if (!token)
-      return res
-        .status(401)
-        .json({ message: "unauthorized - missing jwt signin token" });
-
     decoded = jwt.verify(token, SESSION_SECRET);
   } catch (error) {
     console.error("JWT Verification Error:", error);
     return res.status(401).json({ message: "Invalid token" });
   }
   try {
-    const user = await User.findOne({ googleId: decoded.googleId });
+    const user = await User.findById(decoded);
     if (!user) {
       return res
         .status(401)

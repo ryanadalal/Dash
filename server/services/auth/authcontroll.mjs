@@ -1,58 +1,62 @@
 import "dotenv/config";
-import passport from "./passportconfig.mjs";
-import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import User from "../mongo/models/user.mjs";
+import passport from "./passportconfig.mjs";
 
 const CLIENT_URL = process.env.CLIENT_URL;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
 /**
- * Initiate Google authentication.
+ * Initiate registration.
  *
- * Initiates google oauth2:
- * 1. Redirect user to google oauth2 login page.
+ * Initiates registration:
+ * 1. Generate a salt and a hash with the user password
+ * 2. create a new user in the database
+ * 3. redirect to login page
  *
  * @param {Object} req - The request object.
  * @param {Object} res - The response object used to send back the authentication result.
  * @param {Function} next - The next middleware function in the stack (not used in this function).
+ *
  */
-export const googleAuth = (req, res, next) => {
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-  })(req, res, next);
+export const authRegister = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  try {
+    const newUser = await User.create({
+      email: email,
+      password: hashedPassword,
+    });
+    res.status(201).send("user registered successfully");
+    res.redirect(CLIENT_URL + "/oauth/login");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("error registering user");
+  }
 };
 
 /**
+ * Initiate login.
  *
- * Handles the callback from google oauth2:
- * 1. user passport google strategy to authenticate user
- * 2. redirects user to home page on valid authentication
- * 3. redirects user to login page with errors on fail
+ * Initiates login:
+ * 1. Redirect to passport to authenticate
+ * 2. redirect to oauth login upon success
  *
- * @param {Object} req - request object with google oauth2 callback data
- * @param {Object} res - response object to redirect user
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the authentication result.
+ * @param {Function} next - The next middleware function in the stack (not used in this function).
+ *
  */
-export const googleAuthCallback = async (req, res) => {
-  const googleId = req.user.id;
-  const firstName = req.user.name.givenName;
-  const lastName = req.user.name.familyName;
-  const email = req.user.emails[0].value;
-  const photo = req.user.photos[0].value;
+export const authLogin = async (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.status(400).json({ message: info.message });
 
-  User.findOne({ googleId: googleId })
-    .then((user) => {
-      if (user) return user;
-
-      return User.create({
-        googleId: googleId,
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        photo: photo,
-      });
-    })
-    .then((user) => {
-      const token = jwt.sign({ googleId: user.googleId }, SESSION_SECRET, {
+    try {
+      const token = jwt.sign({ id: user._id }, SESSION_SECRET, {
         expiresIn: "1h",
       });
 
@@ -64,9 +68,9 @@ export const googleAuthCallback = async (req, res) => {
       });
 
       res.redirect(CLIENT_URL + "/oauth/callback");
-    })
-    .catch((error) => {
+    } catch (error) {
       console.log(error);
-      res.status(400).json({ message: `Error creating user ${error}` });
-    });
+      res.status(400).send("error singing in user");
+    }
+  })(req, res, next);
 };
