@@ -16,7 +16,7 @@ function PhotoList({ photo }: { photo: string }) {
 }
 
 export default function NavBar() {
-  const photo = useSelector((state: User) => state.picture);
+  const photo = useSelector((state: User) => state.photo);
   return (
     <nav className="flex flex-wrap h-20 sticky items-center justify-between w-full px-4 py-2 bg-white shadow-md rounded-b-xl lg:px-30 lg:py-3">
       <a

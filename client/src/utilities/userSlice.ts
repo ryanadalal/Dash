@@ -5,7 +5,7 @@ import { User } from "../types/user-types";
 // an empty initial user for the slice
 const initialUser: User = {
   loading: false,
-  id: undefined,
+  googleId: undefined,
 };
 
 // generate action creators and action types automatically for the user state
@@ -20,20 +20,16 @@ const userSlice = createSlice({
      */
     // initialize the user fetch
     loginStart: (state) => {
-      (state.loading = true), (state.id = undefined);
+      (state.loading = true), (state.googleId = undefined);
     },
     // set the user according to the provided paramteres after a successful fetch
     loginSuccess: (state, param) => {
       const { payload } = param;
-      state.email =
-        payload.email.length > 0 ? payload.email[0].value : undefined;
-      state.picture =
-        payload.profilePicture.length > 0
-          ? payload.profilePicture[0].value
-          : undefined;
-      state.firstName = payload.name.givenName;
-      state.lastName = payload.name.familyName;
-      state.id = payload.id;
+      state.email = payload.email;
+      state.photo = payload.photo;
+      state.firstName = payload.firstName;
+      state.lastName = payload.lastName;
+      state.googleId = payload.googleId;
       state.loading = false;
     },
     // on a user fetch fail reset the user and log the error
@@ -42,7 +38,7 @@ const userSlice = createSlice({
       console.log("login fail: ");
       console.log(payload);
       state.loading = false;
-      state.id = undefined;
+      state.googleId = undefined;
     },
     // empty the state on a logout
     logout: (state) => {
@@ -50,8 +46,8 @@ const userSlice = createSlice({
       state.email = undefined;
       state.firstName = undefined;
       state.lastName = undefined;
-      state.id = undefined;
-      state.picture = undefined;
+      state.googleId = undefined;
+      state.photo = undefined;
     },
   },
 });

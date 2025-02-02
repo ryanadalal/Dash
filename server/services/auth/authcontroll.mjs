@@ -33,18 +33,18 @@ export const googleAuth = (req, res, next) => {
  * @param {Object} res - response object to redirect user
  */
 export const googleAuthCallback = async (req, res) => {
-  const id = req.user.id;
+  const googleId = req.user.id;
   const firstName = req.user.name.givenName;
   const lastName = req.user.name.familyName;
   const email = req.user.emails[0].value;
   const photo = req.user.photos[0].value;
 
-  User.findOne({ id: id })
+  User.findOne({ googleId: googleId })
     .then((user) => {
       if (user) return user;
 
       return User.create({
-        id: id,
+        googleId: googleId,
         email: email,
         firstName: firstName,
         lastName: lastName,
@@ -52,7 +52,7 @@ export const googleAuthCallback = async (req, res) => {
       });
     })
     .then((user) => {
-      const token = jwt.sign({ user: user.id }, SESSION_SECRET, {
+      const token = jwt.sign({ googleId: user.googleId }, SESSION_SECRET, {
         expiresIn: "1h",
       });
 
