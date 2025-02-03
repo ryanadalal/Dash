@@ -19,7 +19,7 @@ export default async function authenticateJWT(req, res, next) {
     return res.status(401).json({ message: "Invalid token" });
   }
   try {
-    const user = await User.findById(decoded);
+    const user = await User.findById(decoded.id);
     if (!user) {
       return res
         .status(401)

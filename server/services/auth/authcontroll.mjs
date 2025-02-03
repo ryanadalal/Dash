@@ -31,11 +31,13 @@ export const authRegister = async (req, res, next) => {
       email: email,
       password: hashedPassword,
       valid: false,
+      emailVerified: false,
     });
-    res.status(201).send("user registered successfully");
-    res.redirect(CLIENT_URL + "/oauth/login");
+    res
+      .status(201)
+      .json({ success: true, message: "user register successfully" });
   } catch (error) {
-    console.log(error);
+    console.log("Error registering user:", error.errorResponse.errmsg);
     res.status(400).send("error registering user");
   }
 };
@@ -54,29 +56,26 @@ export const authRegister = async (req, res, next) => {
  */
 export const authLogin = async (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
-    console.log("authenticating with local strategy");
     if (err) {
       console.log(`error: ${err}`);
       return next(err);
     }
     if (!user) {
       console.log("no user found");
-      return res.status(400).json({ message: info.message });
+      return res.status(401).json({ message: info.message });
     }
 
     try {
       const token = jwt.sign({ id: user._id }, SESSION_SECRET, {
         expiresIn: "1h",
       });
-      console.log("token created");
       res.cookie("token", token, {
         httpOnly: true, // prevent client side js access
         secure: process.env.NODE_ENV === "production", // use secure tokens for production
         sameSite: "strict",
         maxAge: 3600000, // token expires in 1 hour
       });
-      console.log("redirecting...");
-      res.json({ success: true, message: "successful login" });
+      res.status(200).json({ success: true, message: "successful login" });
     } catch (error) {
       console.log("error signing in with jwt:", error);
       res.status(500).json("error singing in user");

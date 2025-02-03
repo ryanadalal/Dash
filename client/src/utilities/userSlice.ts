@@ -29,14 +29,13 @@ const userSlice = createSlice({
       state.photo = payload.photo;
       state.firstName = payload.firstName;
       state.lastName = payload.lastName;
-      state.id = payload.id;
+      state.id = payload._id;
       state.loading = false;
     },
     // on a user fetch fail reset the user and log the error
     loginFail: (state, param) => {
       const { payload } = param;
-      console.log("login fail: ");
-      console.log(payload);
+      console.log("login fail:", payload.error);
       state.loading = false;
       state.id = undefined;
     },
