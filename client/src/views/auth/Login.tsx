@@ -19,6 +19,7 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>("");
+  const [clicked, setClicked] = useState<boolean>(false);
 
   useEffect(() => {
     if (id != undefined && !user_loading) {
@@ -29,12 +30,14 @@ export default function Login() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setClicked(true);
     setError(null);
 
     try {
       await loginUser(email, password);
-    } catch (err: any) {
-      setError(err.response?.data?.message || "login failed");
+    } catch (error: any) {
+      setError(error.response?.data?.message || "login failed");
+      setClicked(false);
     }
   };
 
@@ -67,10 +70,15 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full  text-white bg-black hover:bg-realamber hover:text-textslate py-2 rounded-md"
+            className="w-full mb-4 bg-textslate text-white enabled:bg-black enabled:hover:bg-realamber enabled:hover:text-textslate disabled:cursor-not-allowed py-2 rounded-md"
+            disabled={clicked}
           >
             Login
           </button>
+
+          <a href="/register" className="text-textslate hover:text-black">
+            Not a member <span className="underline">register here</span>
+          </a>
         </form>
       </div>
     </div>

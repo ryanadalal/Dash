@@ -24,7 +24,7 @@ export default function Register() {
   const [passwordStrengthError, setPasswordStrengthError] = useState<
     string | null
   >(null);
-
+  const [clicked, setClicked] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
 
   useEffect(() => {
@@ -67,6 +67,7 @@ export default function Register() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setClicked(true);
     setError(null);
 
     setPasswordsMatch(password === confPassword);
@@ -82,8 +83,9 @@ export default function Register() {
 
     try {
       await registerUser(email, password);
-    } catch (err: any) {
-      setError(err.response?.data?.message || `Register failed`);
+    } catch (error: any) {
+      setError(error.response?.data?.message || `Register failed`);
+      setClicked(false);
     }
   };
 
@@ -134,11 +136,15 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full bg-textslate text-white enabled:bg-black enabled:hover:bg-realamber enabled:hover:text-textslate disabled:cursor-not-allowed py-2 rounded-md"
-            disabled={password !== confPassword || !passwordValid}
+            className="w-full mb-4 bg-textslate text-white enabled:bg-black enabled:hover:bg-realamber enabled:hover:text-textslate disabled:cursor-not-allowed py-2 rounded-md"
+            disabled={password !== confPassword || !passwordValid || clicked}
           >
             Register
           </button>
+
+          <a href="/login" className="text-textslate hover:text-black">
+            Already a member <span className="underline">login here</span>
+          </a>
         </form>
       </div>
     </div>

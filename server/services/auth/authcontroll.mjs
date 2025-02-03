@@ -37,8 +37,14 @@ export const authRegister = async (req, res, next) => {
       .status(201)
       .json({ success: true, message: "user register successfully" });
   } catch (error) {
-    console.log("Error registering user:", error.errorResponse.errmsg);
-    res.status(400).send("error registering user");
+    console.log(
+      "Error registering user:",
+      error.errors?.email.message || error
+    );
+    res.status(400).json({
+      success: false,
+      message: error.errors?.email.message || "Could not register user",
+    });
   }
 };
 
@@ -61,7 +67,7 @@ export const authLogin = async (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      console.log("no user found");
+      console.log("no user found with proper credentials");
       return res.status(401).json({ message: info.message });
     }
 

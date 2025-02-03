@@ -25,10 +25,7 @@ export const registerUser = async (email: string, password: string) => {
       window.location.href = "/login";
     }
   } catch (error: any) {
-    console.error(
-      "register failed:",
-      error.response?.data?.message || error.message
-    );
+    console.error("register failed:", error.message);
     throw error;
   }
 };
@@ -48,10 +45,7 @@ export const loginUser = async (email: string, password: string) => {
       window.location.href = "/oauth/callback";
     }
   } catch (error: any) {
-    console.error(
-      "login failed:",
-      error.response?.data?.message || error.message
-    );
+    console.error("login failed:", error.message);
     throw error;
   }
 };

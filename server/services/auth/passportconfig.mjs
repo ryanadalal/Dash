@@ -22,11 +22,11 @@ passport.use(
         // find the user in the database using the email
         const user = await User.findOne({ email: email });
         // if the user is not there return an error
-        if (!user) return done(null, false, { message: "invalid credentials" });
+        if (!user) return done(null, false, { message: "Invalid credentials" });
         //check if the passwords match and return an error
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
-          return done(null, false, { message: "invalid credentials" });
+          return done(null, false, { message: "Invalid credentials" });
 
         return done(null, user);
       } catch (error) {
