@@ -5,6 +5,8 @@ import { User } from "../types/user-types";
 // an empty initial user for the slice
 const initialUser: User = {
   loading: false,
+  valid: false,
+  emailVerified: false,
   id: undefined,
 };
 
@@ -29,6 +31,8 @@ const userSlice = createSlice({
       state.photo = payload.photo;
       state.firstName = payload.firstName;
       state.lastName = payload.lastName;
+      state.valid = payload.valid;
+      state.emailVerified = payload.emailVerified;
       state.id = payload._id;
       state.loading = false;
     },
@@ -41,12 +45,7 @@ const userSlice = createSlice({
     },
     // empty the state on a logout
     logout: (state) => {
-      state.loading = false;
-      state.email = undefined;
-      state.firstName = undefined;
-      state.lastName = undefined;
-      state.id = undefined;
-      state.photo = undefined;
+      state = initialUser;
     },
   },
 });

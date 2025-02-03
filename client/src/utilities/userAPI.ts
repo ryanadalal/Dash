@@ -49,7 +49,36 @@ export const loginUser = async (email: string, password: string) => {
     throw error;
   }
 };
-
+/**
+ * Fetch user data using the backends fetch route
+ * @returns the user data from the backend
+ */
 export const getUserData = () => {
   return user_api.get("/protected/callback/success");
+};
+
+/**
+ * Finish signing up the user
+ * 1. send the data to the backend to try filling in the new account
+ * 2. redirect to home page on successful login
+ * 3. on a failure log the error and throw it
+ * @param email
+ * @param password
+ */
+export const completeRegisterUser = async (
+  firstName: string,
+  lastName: string
+) => {
+  try {
+    const response = await user_api.post("/protected/completeregister", {
+      firstName,
+      lastName,
+    });
+    if (response.data.success) {
+      window.location.href = "/dashboard";
+    }
+  } catch (error: any) {
+    console.error("completion of registration process failed:", error.message);
+    throw error;
+  }
 };

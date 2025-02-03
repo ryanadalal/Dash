@@ -14,4 +14,6 @@ export type User = {
   lastName?: string;
   email?: string;
   photo?: string;
+  valid: boolean;
+  emailVerified: boolean;
 };

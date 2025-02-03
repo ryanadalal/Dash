@@ -9,6 +9,7 @@ import AuthProtected from "./auth/AuthProtected.tsx";
 import Dashboard from "./home/Dashboard.tsx";
 import Register from "./auth/Register.tsx";
 import Login from "./auth/Login.tsx";
+import CompleteRegister from "./auth/CompleteRegister.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "", element: <Navigate to="/dashboard" replace={true} /> },
     ],
   },
+  { path: "/completeregister", element: <CompleteRegister /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
   { path: "/oauth/callback", element: <OAuthCallback /> },
