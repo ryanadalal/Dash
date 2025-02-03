@@ -7,14 +7,28 @@ const user_api = axios.create({
   withCredentials: true,
 });
 
-export const registerUser = async (email: String, password: String) => {
-  return user_api.post(`${USER_API_BASE_URL}/register`, { email, password });
+export const registerUser = async (email: string, password: string) => {
+  return user_api.post("/auth/register", {
+    email,
+    password,
+  });
 };
 
-export const loginUser = async (email: String, password: String) => {
-  return user_api.post(`${USER_API_BASE_URL}/login`, { email, password });
+export const loginUser = async (email: string, password: string) => {
+  try {
+    const response = await user_api.post("/auth/login", { email, password });
+    if (response.data.success) {
+      window.location.href = "/oauth/callback";
+    }
+  } catch (error: any) {
+    console.error(
+      "login failed:",
+      error.response?.data?.message || error.message
+    );
+    throw error;
+  }
 };
 
 export const getUserData = () => {
-  return user_api.get(`${USER_API_BASE_URL}/protected/callback/success`);
+  return user_api.get("/protected/callback/success");
 };

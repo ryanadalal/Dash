@@ -1,5 +1,7 @@
 import passport from "passport";
 import LocalStrategy from "passport-local";
+import bcrypt from "bcryptjs";
+import User from "../mongo/models/user.mjs";
 
 passport.use(
   "local",

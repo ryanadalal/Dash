@@ -1,5 +1,6 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from "../mongo/models/user.mjs";
 import passport from "./passportconfig.mjs";
 
@@ -29,6 +30,7 @@ export const authRegister = async (req, res, next) => {
     const newUser = await User.create({
       email: email,
       password: hashedPassword,
+      valid: false,
     });
     res.status(201).send("user registered successfully");
     res.redirect(CLIENT_URL + "/oauth/login");
@@ -52,25 +54,32 @@ export const authRegister = async (req, res, next) => {
  */
 export const authLogin = async (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
-    if (err) return next(err);
-    if (!user) return res.status(400).json({ message: info.message });
+    console.log("authenticating with local strategy");
+    if (err) {
+      console.log(`error: ${err}`);
+      return next(err);
+    }
+    if (!user) {
+      console.log("no user found");
+      return res.status(400).json({ message: info.message });
+    }
 
     try {
       const token = jwt.sign({ id: user._id }, SESSION_SECRET, {
         expiresIn: "1h",
       });
-
+      console.log("token created");
       res.cookie("token", token, {
         httpOnly: true, // prevent client side js access
         secure: process.env.NODE_ENV === "production", // use secure tokens for production
         sameSite: "strict",
         maxAge: 3600000, // token expires in 1 hour
       });
-
-      res.redirect(CLIENT_URL + "/oauth/callback");
+      console.log("redirecting...");
+      res.json({ success: true, message: "successful login" });
     } catch (error) {
-      console.log(error);
-      res.status(400).send("error singing in user");
+      console.log("error signing in with jwt:", error);
+      res.status(500).json("error singing in user");
     }
   })(req, res, next);
 };

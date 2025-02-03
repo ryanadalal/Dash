@@ -40,12 +40,12 @@ export default function Login() {
 
   return (
     <div className="h-screen flex bg-bgslate justify-center items-center">
-      <div className="flex flex-col justify-evenly text-center h-75 p-7 bg-white shadow-2xl rounded-2xl mb-30">
-        <h1 className="py-1.5 text-4xl text-textslate font-semibold">
+      <div className="flex flex-col justify-evenly text-center h-fit p-7 bg-white shadow-2xl rounded-2xl mb-30">
+        <h1 className="py-1.5 text-4xl text-realamber font-semibold">
           Login to Real
         </h1>
         <form onSubmit={handleSubmit} className="p-6 w-80">
-          {error && <p className="text-red-500">{error}</p>}
+          {error && <p className="text-red-500 mb-4">{error}</p>}
 
           <input
             type="email"
@@ -67,7 +67,7 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-textslate hover:bg-realamber text-white hover:text-textslate py-2 rounded-md"
+            className="w-full  text-white bg-black hover:bg-realamber hover:text-textslate py-2 rounded-md"
           >
             Login
           </button>

@@ -35,7 +35,13 @@ export default function Register() {
   }, [id, user_loading, navigate]);
 
   const validatePassword = (password: string) => {
+    if (password.length == 0) {
+      setPasswordStrengthError(null);
+      return;
+    }
+
     const lengthValid = password.length >= 8;
+
     const complexityValid =
       /[A-Z]/.test(password) &&
       /\d/.test(password) &&
@@ -45,7 +51,7 @@ export default function Register() {
       setPasswordStrengthError("password must have 8 characters");
     } else if (!complexityValid) {
       setPasswordStrengthError(
-        "password must contain at least one uppercase letter, number, and special character."
+        "password must contain at least one uppercase letter, lowercase letter, number, and special character."
       );
     } else {
       setPasswordStrengthError(null);
@@ -77,7 +83,7 @@ export default function Register() {
     try {
       await registerUser(email, password);
     } catch (err: any) {
-      setError(err.response?.data?.message || "Register failed");
+      setError(err.response?.data?.message || `Register failed`);
     }
   };
 
@@ -128,7 +134,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full bg-textslate enabled:hover:bg-realamber text-white enabled:hover:text-textslate disabled:cursor-not-allowed py-2 rounded-md"
+            className="w-full bg-textslate text-white enabled:bg-black enabled:hover:bg-realamber enabled:hover:text-textslate disabled:cursor-not-allowed py-2 rounded-md"
             disabled={password !== confPassword || !passwordValid}
           >
             Register
