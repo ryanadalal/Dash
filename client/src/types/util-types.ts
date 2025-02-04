@@ -3,5 +3,6 @@
  */
 export interface ModalRendererProps {
   class?: string;
+  title?: string;
   children?: JSX.Element | JSX.Element[];
 }

@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import { User } from "../../types/user-types.ts";
 import { completeRegisterUser } from "../../utilities/userAPI.ts";
-import DateSelection from "../support/DateSelection.tsx";
+import SubmitInput from "../support/form/SubmitInput.tsx";
+import AuthBase from "./AuthBase.tsx";
+import DateSelection from "../support/form/DateSelection.tsx";
 
 /**
  * Component for Register in with local stragtegy
@@ -23,7 +25,7 @@ export default function CompleteRegister() {
 
   useEffect(() => {
     if (valid) {
-      console.log("logged in redirecting...");
+      console.log("valid already redirecting...");
       navigate("/dashboard");
     }
   }, [valid, navigate]);
@@ -47,42 +49,32 @@ export default function CompleteRegister() {
   };
 
   return (
-    <div className="h-screen flex bg-bgslate justify-center items-center">
-      <div className="flex flex-col justify-center text-center w-fit h-fit p-7 bg-white shadow-2xl rounded-2xl mb-30">
-        <h1 className="py-1.5 text-4xl text-realamber font-semibold">
-          Finish Registration
-        </h1>
-        <form onSubmit={handleSubmit} className="p-6 w-fit">
-          {error && <p className="text-red-500 mb-4">{error}</p>}
-          <div className="flex flex-row justify-between mb-4 gap-4 w-95">
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setfirstName(e.target.value)}
-              required
-              className={textBoxStyle}
-              placeholder="first name"
-            />
+    <AuthBase title="Finish Registration">
+      <form onSubmit={handleSubmit} className="p-6 w-fit">
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <div className="flex flex-row justify-between mb-4 gap-4 w-95">
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setfirstName(e.target.value)}
+            required
+            className={textBoxStyle}
+            placeholder="first name"
+          />
 
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setlastName(e.target.value)}
-              required
-              className={textBoxStyle}
-              placeholder="last name"
-            />
-          </div>
-          <DateSelection></DateSelection>
-          <button
-            type="submit"
-            className="w-full mb-4 bg-textslate text-white enabled:bg-black enabled:hover:bg-realamber enabled:hover:text-textslate disabled:cursor-not-allowed py-2 rounded-md"
-            disabled={clicked}
-          >
-            Finish Registering
-          </button>
-        </form>
-      </div>
-    </div>
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setlastName(e.target.value)}
+            required
+            className={textBoxStyle}
+            placeholder="last name"
+          />
+        </div>
+        <DateSelection />
+
+        <SubmitInput label="Finish Registering" disabled={clicked} />
+      </form>
+    </AuthBase>
   );
 }

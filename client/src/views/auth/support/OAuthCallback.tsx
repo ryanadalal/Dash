@@ -1,19 +1,17 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
   loginSuccess,
   loginFail,
   loginStart,
-} from "../../utilities/userSlice.ts";
-import { getUserData } from "../../utilities/userAPI.ts";
-import { User } from "../../types/user-types.ts";
+} from "../../../utilities/userSlice.ts";
+import { getUserData } from "../../../utilities/userAPI.ts";
 
 export default function OAuthCallback() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const valid = useSelector((state: User) => state.valid);
 
   useEffect(() => {
     const handleCallback = async () => {
@@ -22,11 +20,7 @@ export default function OAuthCallback() {
 
         const response = await getUserData();
         dispatch(loginSuccess(response.data.user));
-        if (valid) {
-          navigate("/dashboard");
-        } else {
-          navigate("/completeregister");
-        }
+        navigate("/dashboard");
       } catch (error: any) {
         dispatch(
           loginFail({
