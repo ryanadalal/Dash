@@ -8,6 +8,7 @@ import {
   loginStart,
 } from "../../../utilities/userSlice.ts";
 import { getUserData } from "../../../utilities/userAPI.ts";
+import Loading from "../../support/Loading.tsx";
 
 export default function OAuthCallback() {
   const dispatch = useDispatch();
@@ -36,9 +37,5 @@ export default function OAuthCallback() {
     handleCallback();
   }, [dispatch, navigate]);
 
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-realamber"></div>
-    </div>
-  );
+  return <Loading message="Loading user data" />;
 }

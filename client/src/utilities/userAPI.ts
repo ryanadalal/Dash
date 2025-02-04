@@ -67,16 +67,18 @@ export const getUserData = () => {
  */
 export const completeRegisterUser = async (
   firstName: string,
-  lastName: string
+  lastName: string,
+  birthDate: Date
 ) => {
   try {
     const response = await user_api.post("/protected/completeregister", {
       firstName,
       lastName,
+      birthDate,
     });
     if (response.data.success) {
-      window.location.href = "/dashboard";
-    }
+      window.location.href = "/oauth/callback";
+    }need to make a standard save user data functino and make this one save the result automatically
   } catch (error: any) {
     console.error("completion of registration process failed:", error.message);
     throw error;

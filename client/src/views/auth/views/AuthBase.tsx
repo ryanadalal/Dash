@@ -1,4 +1,4 @@
-import { ModalRendererProps } from "../../types/util-types";
+import { ModalRendererProps } from "../../../types/util-types";
 
 export default function AuthBase(props: ModalRendererProps) {
   return (

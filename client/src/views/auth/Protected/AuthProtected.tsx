@@ -3,26 +3,28 @@ import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import { User } from "../../../types/user-types.ts";
+import Loading from "../../support/Loading.tsx";
 
 /**
  * ensures that users accessing account restricted sections are logged in
  * if a user is not logged in they are redirected to the login page
  * @returns an empty object for other components to build on top of
  */
+
 export default function AuthProtected() {
   const id = useSelector((state: User) => state.id);
   const user_loading = useSelector((state: User) => state.loading);
-  const valid = useSelector((state: User) => state.valid);
   const navigate = useNavigate();
   useEffect(() => {
     if (id == undefined || user_loading) {
       console.log("not logged in redirecting...");
       navigate("/login");
-    } else if (!valid) {
-      console.log("registration not completed");
-      navigate("/completeregister");
     }
   }, [id, user_loading, navigate]);
+
+  if (id == undefined || user_loading) {
+    return <Loading message="Confirming login status" />;
+  }
 
   return <Outlet />;
 }

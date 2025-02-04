@@ -1,12 +1,9 @@
-import { FormEvent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useState } from "react";
 
-import { User } from "../../types/user-types.ts";
-import { completeRegisterUser } from "../../utilities/userAPI.ts";
-import SubmitInput from "../support/form/SubmitInput.tsx";
+import { completeRegisterUser } from "../../../utilities/userAPI.ts";
+import SubmitInput from "../../support/form/SubmitInput.tsx";
 import AuthBase from "./AuthBase.tsx";
-import DateSelection from "../support/form/DateSelection.tsx";
+import DateSelection from "../../support/form/DateSelection.tsx";
 import dayjs from "dayjs";
 
 /**
@@ -15,22 +12,10 @@ import dayjs from "dayjs";
  * @returns Register object of type react component
  */
 export default function CompleteRegister() {
-  // check if the user is logged in already and renavigate to dashboard if they are
-  const valid = useSelector((state: User) => state.valid);
-  const navigate = useNavigate();
-
   const [firstName, setfirstName] = useState<string>("");
   const [lastName, setlastName] = useState<string>("");
   const [clicked, setClicked] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
-
-  useEffect(() => {
-    dayjs().format();
-    if (valid) {
-      console.log("valid already redirecting...");
-      navigate("/dashboard");
-    }
-  }, [valid, navigate]);
 
   const textBoxStyle =
     "p-2 border border-gray-300 rounded-md shrink min-w-0 placeholder-textslate caret-realamber focus:outline-2 focus:outline-realamber";
@@ -43,20 +28,21 @@ export default function CompleteRegister() {
     const birthDay = e.currentTarget.birthDay.value;
     const birthMonth = e.currentTarget.birthMonth.value;
     const birthYear = e.currentTarget.birthYear.value;
-    console.log(birthDay, birthMonth, birthYear);
+
+    const DATE_FORMAT = "YYYY-MM-DD";
+    const inputDate = `${birthYear}-${birthMonth}-${birthDay}`;
+    const parsedDate = dayjs(inputDate, DATE_FORMAT, true);
     if (
-      !dayjs(
-        `${birthMonth}-${birthDay}-${birthYear}`,
-        "MM-DD-YYYY",
-        true
-      ).isValid()
+      !(parsedDate.isValid() && parsedDate.format(DATE_FORMAT) === inputDate)
     ) {
+      console.log("invalid date");
       setError("Invalid date");
       setClicked(false);
       return;
     }
+
     try {
-      await completeRegisterUser(firstName, lastName);
+      await completeRegisterUser(firstName, lastName, new Date(inputDate));
     } catch (error: any) {
       setError(
         error.response?.data?.message || "Completetion of registration failed"

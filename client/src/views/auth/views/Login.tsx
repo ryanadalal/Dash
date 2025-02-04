@@ -2,11 +2,11 @@ import { FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { User } from "../../types/user-types.ts";
-import { loginUser } from "../../utilities/userAPI.ts";
-import EmailInput from "../support/form/EmailInput.tsx";
-import PasswordInput from "../support/form/PasswordInput.tsx";
-import SubmitInput from "../support/form/SubmitInput.tsx";
+import { User } from "../../../types/user-types.ts";
+import { loginUser } from "../../../utilities/userAPI.ts";
+import EmailInput from "../../support/form/EmailInput.tsx";
+import PasswordInput from "../../support/form/PasswordInput.tsx";
+import SubmitInput from "../../support/form/SubmitInput.tsx";
 import AuthBase from "./AuthBase.tsx";
 
 /**

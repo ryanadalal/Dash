@@ -5,21 +5,28 @@ import {
 } from "react-router-dom";
 
 import OAuthCallback from "./auth/support/OAuthCallback.tsx";
-import AuthProtected from "./auth/support/AuthProtected.tsx";
+import AuthProtected from "./auth/Protected/AuthProtected.tsx";
 import Dashboard from "./home/Dashboard.tsx";
-import Register from "./auth/Register.tsx";
-import Login from "./auth/Login.tsx";
-import CompleteRegister from "./auth/CompleteRegister.tsx";
+import Register from "./auth/views/Register.tsx";
+import Login from "./auth/views/Login.tsx";
+import CompleteRegister from "./auth/views/CompleteRegister.tsx";
+import RegisteredProtected from "./auth/Protected/RegisteredProtected.tsx";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <AuthProtected />,
     children: [
-      { path: "dashboard", element: <Dashboard /> },
-      { path: "completeregister", element: <CompleteRegister /> },
-      { path: "*", element: <Navigate to="/dashboard" replace={true} /> },
-      { path: "", element: <Navigate to="/dashboard" replace={true} /> },
+      { path: "/completeregister", element: <CompleteRegister /> },
+      {
+        path: "",
+        element: <RegisteredProtected />,
+        children: [
+          { path: "/dashboard", element: <Dashboard /> },
+          { path: "*", element: <Navigate to="/dashboard" replace={true} /> },
+          { path: "", element: <Navigate to="/dashboard" replace={true} /> },
+        ],
+      },
     ],
   },
   { path: "/login", element: <Login /> },
