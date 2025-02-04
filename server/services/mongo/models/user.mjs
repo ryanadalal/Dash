@@ -5,20 +5,8 @@ const userSchmea = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      validate: {
-        validator: async function (email) {
-          const user = this.constructor.findOne({ email });
-          if (user) {
-            if (this.id === user.id) {
-              return true;
-            }
-            //return false;
-            throw new Error("Email already in use");
-          }
-          return true;
-        },
-      },
-      message: (props) => "Email already in use",
+      unique: true,
+      trim: true,
     },
     password: { type: String, required: true },
     firstName: { type: String, required: false },

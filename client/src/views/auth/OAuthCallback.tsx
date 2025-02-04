@@ -32,7 +32,7 @@ export default function OAuthCallback() {
           loginFail({
             error:
               error.response?.data?.message ||
-              "Login using Google failed! Please try using email and password!",
+              "Login failed! Please try again!",
           })
         );
         navigate("/login");

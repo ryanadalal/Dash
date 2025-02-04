@@ -12,9 +12,8 @@ passport.use(
      * 1. if the users credentials are go to the next middle ware with the user
      * 2. if invalid throw an error or respond with message
      *
-     * @param {string} accessToken - The access token provided by Google.
-     * @param {string} refreshToken - The refresh token provided by Google.
-     * @param {Object} profile - The user's profile information from Google.
+     * @param {string} email - the email provided by the user
+     * @param {string} password - the password provided by the user
      * @param {Function} done - The callback to call with the authentication result.
      */
     async (email, password, done) => {

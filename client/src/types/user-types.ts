@@ -1,11 +1,11 @@
 /**
  * Type for a user in the system:
  * loading: user currently being loaded into the system?
- * googleId: the id assigned to users by google oauth
+ * id: the id assigned to users by mongo automatically
  * firstName: given name
  * lastName: family: name
- * email: the first email associated with the google oauth account
- * photo: the first profile photo associated with the google oauth account
+ * email: users email
+ * photo: null
  */
 export type User = {
   loading: boolean;

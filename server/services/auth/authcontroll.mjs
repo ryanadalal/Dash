@@ -37,13 +37,12 @@ export const authRegister = async (req, res, next) => {
       .status(201)
       .json({ success: true, message: "user register successfully" });
   } catch (error) {
-    console.log(
-      "Error registering user:",
-      error.errors?.email.message || error
-    );
     res.status(400).json({
       success: false,
-      message: error.errors?.email.message || "Could not register user",
+      message:
+        error.code === 11000
+          ? "Email already in use"
+          : "Could not register user",
     });
   }
 };

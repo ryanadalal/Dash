@@ -21,9 +21,7 @@ export default async function authenticateJWT(req, res, next) {
   try {
     const user = await User.findById(decoded.id);
     if (!user) {
-      return res
-        .status(401)
-        .json({ message: "User with your google id not found" });
+      return res.status(401).json({ message: "User with your id not found" });
     }
     // attach the user to the request object
     req.user = user;
