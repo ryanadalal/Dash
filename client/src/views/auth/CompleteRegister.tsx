@@ -7,6 +7,7 @@ import { completeRegisterUser } from "../../utilities/userAPI.ts";
 import SubmitInput from "../support/form/SubmitInput.tsx";
 import AuthBase from "./AuthBase.tsx";
 import DateSelection from "../support/form/DateSelection.tsx";
+import dayjs from "dayjs";
 
 /**
  * Component for Register in with local stragtegy
@@ -24,6 +25,7 @@ export default function CompleteRegister() {
   const [error, setError] = useState<string | null>("");
 
   useEffect(() => {
+    dayjs().format();
     if (valid) {
       console.log("valid already redirecting...");
       navigate("/dashboard");
@@ -38,11 +40,26 @@ export default function CompleteRegister() {
     setClicked(true);
     setError(null);
 
+    const birthDay = e.currentTarget.birthDay.value;
+    const birthMonth = e.currentTarget.birthMonth.value;
+    const birthYear = e.currentTarget.birthYear.value;
+    console.log(birthDay, birthMonth, birthYear);
+    if (
+      !dayjs(
+        `${birthMonth}-${birthDay}-${birthYear}`,
+        "MM-DD-YYYY",
+        true
+      ).isValid()
+    ) {
+      setError("Invalid date");
+      setClicked(false);
+      return;
+    }
     try {
       await completeRegisterUser(firstName, lastName);
     } catch (error: any) {
       setError(
-        error.response?.data?.message || `Completetion of registration failed`
+        error.response?.data?.message || "Completetion of registration failed"
       );
       setClicked(false);
     }
