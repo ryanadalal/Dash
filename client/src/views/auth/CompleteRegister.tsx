@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { User } from "../../types/user-types.ts";
 import { completeRegisterUser } from "../../utilities/userAPI.ts";
+import DateSelection from "../support/DateSelection.tsx";
 
 /**
  * Component for Register in with local stragtegy
@@ -19,7 +20,6 @@ export default function CompleteRegister() {
   const [lastName, setlastName] = useState<string>("");
   const [clicked, setClicked] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
-  const [date, setDate] = useState<string>("");
 
   useEffect(() => {
     if (valid) {
@@ -27,6 +27,9 @@ export default function CompleteRegister() {
       navigate("/dashboard");
     }
   }, [valid, navigate]);
+
+  const textBoxStyle =
+    "p-2 border border-gray-300 rounded-md shrink min-w-0 placeholder-textslate caret-realamber focus:outline-2 focus:outline-realamber";
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,52 +45,35 @@ export default function CompleteRegister() {
       setClicked(false);
     }
   };
-  //^\d{2}\/\d{2}\/\d{4}$
-  //
-  function verifyDate(event: React.KeyboardEvent<HTMLInputElement>) {
-    const regexDate =
-      /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
-    if (regexDate.test(date)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   return (
     <div className="h-screen flex bg-bgslate justify-center items-center">
-      <div className="flex flex-col justify-evenly text-center h-fit p-7 bg-white shadow-2xl rounded-2xl mb-30">
+      <div className="flex flex-col justify-center text-center w-fit h-fit p-7 bg-white shadow-2xl rounded-2xl mb-30">
         <h1 className="py-1.5 text-4xl text-realamber font-semibold">
-          Register for Real
+          Finish Registration
         </h1>
-        <form onSubmit={handleSubmit} className="p-6 w-80">
+        <form onSubmit={handleSubmit} className="p-6 w-fit">
           {error && <p className="text-red-500 mb-4">{error}</p>}
+          <div className="flex flex-row justify-between mb-4 gap-4 w-95">
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setfirstName(e.target.value)}
+              required
+              className={textBoxStyle}
+              placeholder="first name"
+            />
 
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setfirstName(e.target.value)}
-            required
-            className="w-full p-2 border border-gray-300 rounded-md mb-4"
-            placeholder="email"
-          />
-
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setlastName(e.target.value)}
-            required
-            className="w-full p-2 border border-gray-300 rounded-md mb-4"
-            placeholder="password"
-          />
-
-          <input
-            type="text"
-            value={date}
-            onKeyDown={(event) => verifyDate(event)}
-            required
-          />
-
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setlastName(e.target.value)}
+              required
+              className={textBoxStyle}
+              placeholder="last name"
+            />
+          </div>
+          <DateSelection></DateSelection>
           <button
             type="submit"
             className="w-full mb-4 bg-textslate text-white enabled:bg-black enabled:hover:bg-realamber enabled:hover:text-textslate disabled:cursor-not-allowed py-2 rounded-md"
