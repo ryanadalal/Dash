@@ -10,10 +10,6 @@ const router = express.Router();
 
 router.use(authenticateJWT);
 router.get("/callback/success", protectedSendUserData);
-router.post(
-  "/completeregister",
-  protectedCompleteRegister,
-  protectedSendUserData
-);
+router.post("/completeregister", protectedCompleteRegister);
 
 export default router;

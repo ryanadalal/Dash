@@ -24,8 +24,12 @@ const userSlice = createSlice({
     loginStart: (state) => {
       (state.loading = true), (state.id = undefined);
     },
+    // initialize the update to user data
+    updateStart: (state) => {
+      state.loading = true;
+    },
     // set the user according to the provided paramteres after a successful fetch
-    loginSuccess: (state, param) => {
+    saveUserData: (state, param) => {
       const { payload } = param;
       state.email = payload.email;
       state.photo = payload.photo;
@@ -39,7 +43,7 @@ const userSlice = createSlice({
     // on a user fetch fail reset the user and log the error
     loginFail: (state, param) => {
       const { payload } = param;
-      console.log("login fail:", payload.error);
+      console.error("login fail:", payload.error);
       state.loading = false;
       state.id = undefined;
     },
@@ -51,5 +55,6 @@ const userSlice = createSlice({
 });
 
 const { actions, reducer } = userSlice;
-export const { loginSuccess, logout, loginStart, loginFail } = actions;
+export const { saveUserData, updateStart, logout, loginStart, loginFail } =
+  actions;
 export default reducer;

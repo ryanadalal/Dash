@@ -33,14 +33,15 @@ export const protectedSendUserData = async (req, res, next) => {
 export const protectedCompleteRegister = async (req, res, next) => {
   const { firstName, lastName, birthDate } = req.body;
   try {
+    //update the user data or throw an error on a failiure
     req.user.firstName = firstName;
     req.user.lastName = lastName;
     req.user.birthDate = birthDate;
     req.user.valid = true;
     const result = await req.user.save();
-    next();
+    res.status(200).json({ success: true });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({
       success: false,
       message: "could not update user information",

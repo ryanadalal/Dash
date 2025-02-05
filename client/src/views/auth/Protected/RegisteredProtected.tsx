@@ -10,14 +10,11 @@ import Loading from "../../support/Loading.tsx";
  * if a user is not fully registered in they are redirected to the complete register page
  * @returns an empty object for other components to build on top of
  */
-
 export default function RegisteredProtected() {
   const valid = useSelector((state: User) => state.valid);
   const navigate = useNavigate();
   useEffect(() => {
-    console.log(valid);
     if (!valid) {
-      console.log("registration not completed");
       navigate("/completeregister");
     }
   }, [valid, navigate]);

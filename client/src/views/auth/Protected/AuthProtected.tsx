@@ -17,7 +17,6 @@ export default function AuthProtected() {
   const navigate = useNavigate();
   useEffect(() => {
     if (id == undefined || user_loading) {
-      console.log("not logged in redirecting...");
       navigate("/login");
     }
   }, [id, user_loading, navigate]);

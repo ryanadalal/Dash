@@ -42,7 +42,7 @@ export const loginUser = async (email: string, password: string) => {
   try {
     const response = await user_api.post("/auth/login", { email, password });
     if (response.data.success) {
-      window.location.href = "/oauth/callback";
+      window.location.href = "/oauth/callback?update=false";
     }
   } catch (error: any) {
     console.error("login failed:", error.message);
@@ -77,8 +77,8 @@ export const completeRegisterUser = async (
       birthDate,
     });
     if (response.data.success) {
-      window.location.href = "/oauth/callback";
-    }need to make a standard save user data functino and make this one save the result automatically
+      window.location.href = "/oauth/callback?update=true";
+    }
   } catch (error: any) {
     console.error("completion of registration process failed:", error.message);
     throw error;

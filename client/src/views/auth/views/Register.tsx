@@ -33,7 +33,6 @@ export default function Register() {
 
   useEffect(() => {
     if (id != undefined && !user_loading) {
-      console.log("logged in redirecting...");
       navigate("/dashboard");
     }
   }, [id, user_loading, navigate]);

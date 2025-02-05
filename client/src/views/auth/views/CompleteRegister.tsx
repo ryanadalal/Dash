@@ -35,7 +35,6 @@ export default function CompleteRegister() {
     if (
       !(parsedDate.isValid() && parsedDate.format(DATE_FORMAT) === inputDate)
     ) {
-      console.log("invalid date");
       setError("Invalid date");
       setClicked(false);
       return;

@@ -62,7 +62,7 @@ export const authRegister = async (req, res, next) => {
 export const authLogin = async (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
-      console.log(`error: ${err}`);
+      console.error(`error: ${err}`);
       return next(err);
     }
     if (!user) {
@@ -82,7 +82,7 @@ export const authLogin = async (req, res, next) => {
       });
       res.status(200).json({ success: true, message: "successful login" });
     } catch (error) {
-      console.log("error signing in with jwt:", error);
+      console.error("error signing in with jwt:", error);
       res.status(500).json("error singing in user");
     }
   })(req, res, next);
