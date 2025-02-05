@@ -20,7 +20,7 @@ export default function RegisteredProtected() {
   }, [valid, navigate]);
 
   if (!valid) {
-    return <Loading message="Confirming account status" />;
+    return <Loading message="Confirming account validity" />;
   }
 
   return <Outlet />;

@@ -11,8 +11,20 @@ import Register from "./auth/views/Register.tsx";
 import Login from "./auth/views/Login.tsx";
 import CompleteRegister from "./auth/views/CompleteRegister.tsx";
 import RegisteredProtected from "./auth/Protected/RegisteredProtected.tsx";
+import AuthForward from "./auth/Protected/AuthForward.tsx";
 
 const router = createBrowserRouter([
+  { path: "*", element: <Navigate to="/login" replace={true} /> },
+  {
+    path: "",
+    element: <AuthForward />,
+    children: [
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
+      { path: "", element: <Navigate to="/login" replace={true} /> },
+    ],
+  },
+  { path: "/oauth/callback", element: <OAuthCallback /> },
   {
     path: "",
     element: <AuthProtected />,
@@ -21,17 +33,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <RegisteredProtected />,
-        children: [
-          { path: "/dashboard", element: <Dashboard /> },
-          { path: "*", element: <Navigate to="/dashboard" replace={true} /> },
-          { path: "", element: <Navigate to="/dashboard" replace={true} /> },
-        ],
+        children: [{ path: "/dashboard", element: <Dashboard /> }],
       },
     ],
   },
-  { path: "/login", element: <Login /> },
-  { path: "/register", element: <Register /> },
-  { path: "/oauth/callback", element: <OAuthCallback /> },
 ]);
 
 export default function App() {

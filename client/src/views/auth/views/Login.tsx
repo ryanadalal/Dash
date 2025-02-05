@@ -1,8 +1,5 @@
-import { FormEvent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useState } from "react";
 
-import { User } from "../../../types/user-types.ts";
 import { loginUser } from "../../../utilities/userAPI.ts";
 import EmailInput from "../../support/form/EmailInput.tsx";
 import PasswordInput from "../../support/form/PasswordInput.tsx";
@@ -15,23 +12,10 @@ import AuthBase from "./AuthBase.tsx";
  * @returns login object of type react component
  */
 export default function Login() {
-  // check if the user is logged in already and renavigate to dashboard if they are
-  const id = useSelector((state: User) => state.id);
-  const user_loading = useSelector((state: User) => state.loading);
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>("");
   const [clicked, setClicked] = useState<boolean>(false);
-
-
-  need to add a new thing so that if you go to login page need loike an auth protected thing over the whoel page so that on any reload checks even if you reload to login
-  useEffect(() => {
-    if (id != undefined && !user_loading) {
-      navigate("/dashboard");
-    }
-  }, [id, user_loading, navigate]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

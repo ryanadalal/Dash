@@ -1,8 +1,5 @@
-import { FormEvent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useState } from "react";
 
-import { User } from "../../../types/user-types.ts";
 import { registerUser } from "../../../utilities/userAPI.ts";
 import PasswordInput from "../../support/form/PasswordInput.tsx";
 import EmailInput from "../../support/form/EmailInput.tsx";
@@ -15,11 +12,6 @@ import AuthBase from "./AuthBase.tsx";
  * @returns Register object of type react component
  */
 export default function Register() {
-  // check if the user is logged in already and renavigate to dashboard if they are
-  const id = useSelector((state: User) => state.id);
-  const user_loading = useSelector((state: User) => state.loading);
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confPassword, setConfPassword] = useState<string>("");
@@ -30,12 +22,6 @@ export default function Register() {
   >(null);
   const [clicked, setClicked] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
-
-  useEffect(() => {
-    if (id != undefined && !user_loading) {
-      navigate("/dashboard");
-    }
-  }, [id, user_loading, navigate]);
 
   const validatePassword = (password: string) => {
     if (password.length == 0) {

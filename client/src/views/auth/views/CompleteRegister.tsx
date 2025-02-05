@@ -1,13 +1,14 @@
+import dayjs from "dayjs";
 import { FormEvent, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { completeRegisterUser } from "../../../utilities/userAPI.ts";
 import SubmitInput from "../../support/form/SubmitInput.tsx";
 import AuthBase from "./AuthBase.tsx";
 import DateSelection from "../../support/form/DateSelection.tsx";
-import dayjs from "dayjs";
-import { useSelector } from "react-redux";
 import { User } from "../../../types/user-types.ts";
-import { useNavigate } from "react-router-dom";
+import Loading from "../../support/Loading.tsx";
 
 /**
  * Component for Register in with local stragtegy
@@ -20,14 +21,17 @@ export default function CompleteRegister() {
   const [clicked, setClicked] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
 
+  // make sure the user isn't already valid before showing the page
+  const [ready, setReady] = useState<boolean>(false);
   const valid = useSelector((state: User) => state.valid);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (valid) {
       navigate("/dashboard");
+    } else {
+      setReady(true);
     }
-  }, [valid, navigate]);
+  }, [valid, setReady, navigate]);
 
   const textBoxStyle =
     "p-2 border border-gray-300 rounded-md shrink min-w-0 placeholder-textslate caret-realamber focus:outline-2 focus:outline-realamber";
@@ -61,6 +65,11 @@ export default function CompleteRegister() {
       setClicked(false);
     }
   };
+
+  // wait to show the page until its confirmed the user is invalid
+  if (!ready) {
+    return <Loading message="Checking account registration status" />;
+  }
 
   return (
     <AuthBase title="Finish Registration">
