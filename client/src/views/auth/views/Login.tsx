@@ -25,6 +25,8 @@ export default function Login() {
   const [error, setError] = useState<string | null>("");
   const [clicked, setClicked] = useState<boolean>(false);
 
+
+  need to add a new thing so that if you go to login page need loike an auth protected thing over the whoel page so that on any reload checks even if you reload to login
   useEffect(() => {
     if (id != undefined && !user_loading) {
       navigate("/dashboard");

@@ -1,10 +1,13 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import { completeRegisterUser } from "../../../utilities/userAPI.ts";
 import SubmitInput from "../../support/form/SubmitInput.tsx";
 import AuthBase from "./AuthBase.tsx";
 import DateSelection from "../../support/form/DateSelection.tsx";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
+import { User } from "../../../types/user-types.ts";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Component for Register in with local stragtegy
@@ -16,6 +19,15 @@ export default function CompleteRegister() {
   const [lastName, setlastName] = useState<string>("");
   const [clicked, setClicked] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
+
+  const valid = useSelector((state: User) => state.valid);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (valid) {
+      navigate("/dashboard");
+    }
+  }, [valid, navigate]);
 
   const textBoxStyle =
     "p-2 border border-gray-300 rounded-md shrink min-w-0 placeholder-textslate caret-realamber focus:outline-2 focus:outline-realamber";
