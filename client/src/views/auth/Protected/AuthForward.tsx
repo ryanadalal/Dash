@@ -23,7 +23,6 @@ export default function AuthForward() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("paeg loaded");
     if (id !== undefined) {
       navigate("/dashboard");
     }
@@ -31,7 +30,6 @@ export default function AuthForward() {
     async function tryFetchUserData() {
       try {
         const hasToken = (await checkToken()).data.exists;
-        console.log(hasToken);
         if (hasToken) {
           // start the user loading process
           dispatch(updateStart());

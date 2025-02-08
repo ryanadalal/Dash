@@ -20,14 +20,11 @@ export default function Logout() {
         await logoutUser();
         const hasToken = (await checkToken()).data.exists;
         if (!hasToken) {
-          console.log("predidn't");
           dispatch(logout());
         } else {
           const interval = setInterval(async () => {
             const hasToken = (await checkToken()).data.exists;
-            console.log("int", hasToken);
             if (!hasToken) {
-              console.log("didn't have finishing");
               clearInterval(interval);
               dispatch(logout());
             }
@@ -38,7 +35,6 @@ export default function Logout() {
       }
     };
     if (id === undefined) {
-      console.log("success logging out redirectng");
       navigate("/login");
     } else {
       handleCallback();

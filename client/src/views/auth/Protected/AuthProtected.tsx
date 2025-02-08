@@ -24,7 +24,6 @@ export default function AuthProtected() {
   const [checkingAuth, setCheckingAuth] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log("protected loaded");
     if (!checkingAuth) {
       if (id === undefined) {
         navigate("/login");
