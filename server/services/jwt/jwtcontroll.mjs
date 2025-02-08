@@ -13,7 +13,7 @@
 export const jwtCheckToken = async (req, res, next) => {
   return res.status(200).json({
     success: true,
-    exists: req.jwt_token !== null,
+    exists: req.jwt_token !== undefined && req.jwt_token,
     status: 200,
   });
 };

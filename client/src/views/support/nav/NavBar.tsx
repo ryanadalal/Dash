@@ -5,18 +5,19 @@ import { NavBarItem } from "./NavBarItem.tsx";
 import { NavDropDownItem } from "./NavDropDownItem.tsx";
 import { PhotoItem } from "./PhotoItem.tsx";
 import NavDropDown from "./NavDropDown.tsx";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const photo = useSelector((state: User) => state.photo);
   return (
     <>
       <nav className="flex flex-wrap h-13 sticky items-center justify-between w-full px-4 bg-white shadow-md lg:px-30 py-0">
-        <a
-          href="#"
+        <Link
+          to="#"
           className="mr-4 block cursor-pointer py-1.5 text-xl text-realamber font-semibold"
         >
           Reals
-        </a>
+        </Link>
         <ul className="flex gap-1 mb-0 mt-1 flex-row items-center sm:gap-2 h-12">
           <NavBarItem title="Help">
             <NavDropDown>

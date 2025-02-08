@@ -13,27 +13,36 @@ export default function Logout() {
   const id = useSelector((state: User) => state.id);
 
   useEffect(() => {
-    if (id === undefined) {
-      navigate("/login");
-    }
     const handleCallback = async () => {
       try {
         dispatch(updateStart());
         // call to the api and then forward the response to the slice
         await logoutUser();
-
-        const interval = setInterval(async () => {
-          const hasToken = await checkToken();
-          if (!hasToken) {
-            clearInterval(interval);
-            dispatch(logout());
-          }
-        }, 1000);
+        const hasToken = (await checkToken()).data.exists;
+        if (!hasToken) {
+          console.log("predidn't");
+          dispatch(logout());
+        } else {
+          const interval = setInterval(async () => {
+            const hasToken = (await checkToken()).data.exists;
+            console.log("int", hasToken);
+            if (!hasToken) {
+              console.log("didn't have finishing");
+              clearInterval(interval);
+              dispatch(logout());
+            }
+          }, 1000);
+        }
       } catch (error: any) {
         console.error(error);
       }
     };
-    handleCallback();
+    if (id === undefined) {
+      console.log("success logging out redirectng");
+      navigate("/login");
+    } else {
+      handleCallback();
+    }
   }, [id, dispatch]);
 
   return <Loading message="Logging out" />;

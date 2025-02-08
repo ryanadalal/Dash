@@ -5,6 +5,7 @@ import EmailInput from "../../support/form/EmailInput.tsx";
 import PasswordInput from "../../support/form/PasswordInput.tsx";
 import SubmitInput from "../../support/form/SubmitInput.tsx";
 import AuthBase from "./AuthBase.tsx";
+import { Link } from "react-router-dom";
 
 /**
  * Component for loging in with local stragtegy
@@ -44,9 +45,9 @@ export default function Login() {
 
         <SubmitInput label="Login" disabled={clicked} />
 
-        <a href="/register" className="text-textslate hover:text-black">
+        <Link to="/register" className="text-textslate hover:text-black">
           Not a member <span className="underline">register here</span>
-        </a>
+        </Link>
       </form>
     </AuthBase>
   );

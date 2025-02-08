@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function NavDropDownItem({
   title,
   img,
@@ -8,7 +10,7 @@ export function NavDropDownItem({
   dest: string;
 }) {
   return (
-    <a href={dest}>
+    <Link to={dest}>
       <div className="flex w-fill cursor-pointer select-none items-center gap-3 rounded-lg px-1 py-1 text-start leading-tight outline-none transition-all hover:bg-bgslate focus:bg-realamber focus:text-black">
         <div className="flex items-center justify-center rounded-lg p-2">
           <img className="h-6 w-6" src={img} />
@@ -19,6 +21,6 @@ export function NavDropDownItem({
           </h6>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
