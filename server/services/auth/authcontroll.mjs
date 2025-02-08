@@ -87,3 +87,23 @@ export const authLogin = async (req, res, next) => {
     }
   })(req, res, next);
 };
+
+/**
+ * Initiate logout.
+ *
+ * Initiates logout:
+ * 1. clears the cookie from the frontend
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the authentication result.
+ * @param {Function} next - The next middleware function in the stack (not used in this function).
+ *
+ */
+export const authLogout = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // use secure tokens for production
+    sameSite: "strict",
+  });
+  return res.status(200).json({ success: true });
+};

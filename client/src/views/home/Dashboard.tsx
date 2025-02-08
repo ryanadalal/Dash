@@ -1,5 +1,5 @@
 import Body from "./Body.tsx";
-import NavBar from "../support/NavBar.tsx";
+import NavBar from "../support/nav/NavBar.tsx";
 import Tile from "./Tile.tsx";
 
 export default function Dashboard() {

@@ -12,6 +12,7 @@ import Login from "./auth/views/Login.tsx";
 import CompleteRegister from "./auth/views/CompleteRegister.tsx";
 import RegisteredProtected from "./auth/Protected/RegisteredProtected.tsx";
 import AuthForward from "./auth/Protected/AuthForward.tsx";
+import Logout from "./auth/support/Logout.tsx";
 
 const router = createBrowserRouter([
   { path: "*", element: <Navigate to="/login" replace={true} /> },
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
     path: "",
     element: <AuthForward />,
     children: [
+      { path: "/logout", element: <Logout /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "", element: <Navigate to="/login" replace={true} /> },

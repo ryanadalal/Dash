@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -21,8 +21,13 @@ export default function AuthForward() {
   const id = useSelector((state: User) => state.id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [checkingAuth, setCheckingAuth] = useState<boolean>(true);
+
   useEffect(() => {
+    if (id !== undefined) {
+      console.log("got token navigating");
+      navigate("/dashboard");
+    }
+
     async function tryFetchUserData() {
       try {
         // start the user loading process
@@ -38,23 +43,12 @@ export default function AuthForward() {
               "Login failed! Please try again!",
           })
         );
-      } finally {
-        setCheckingAuth(false);
       }
     }
-    if (id) {
-      navigate("/dashboard");
-    } else {
-      tryFetchUserData();
-    }
-  }, [id, setCheckingAuth, navigate, dispatch]);
-  useEffect(() => {
-    if (!checkingAuth) {
-      if (id) {
-        navigate("/dashboard");
-      }
-    }
-  }, [id, checkingAuth, navigate]);
+    console.log(id);
+
+    tryFetchUserData();
+  }, [id, navigate, dispatch]);
 
   // return outlet right away because this route isn't protected
   // users can see the login page and then be redirected

@@ -58,6 +58,14 @@ export const getUserData = () => {
 };
 
 /**
+ * Asks the backend to check for a valid token
+ * @returns backend response
+ */
+export const checkToken = () => {
+  return user_api.get("/auth/token");
+};
+
+/**
  * Finish signing up the user
  * 1. send the data to the backend to try filling in the new account
  * 2. redirect to home page on successful login
@@ -81,6 +89,21 @@ export const completeRegisterUser = async (
     }
   } catch (error: any) {
     console.error("completion of registration process failed:", error.message);
+    throw error;
+  }
+};
+
+/**
+ * logout the user
+ * 1. send a logout request to the backend
+ * 2. if successful redirect to the login
+ * 3. if failiure log and throw the error
+ */
+export const logoutUser = async () => {
+  try {
+    await user_api.post("/auth/logout");
+  } catch (error: any) {
+    console.error("logout failed:", error.message);
     throw error;
   }
 };

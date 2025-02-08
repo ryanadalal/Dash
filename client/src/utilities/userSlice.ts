@@ -48,8 +48,11 @@ const userSlice = createSlice({
       state.id = undefined;
     },
     // empty the state on a logout
-    logout: () => {
-      return initialUser;
+    logout: (state) => {
+      state.loading = false;
+      state.valid = false;
+      state.emailVerified = false;
+      state.id = undefined;
     },
   },
 });

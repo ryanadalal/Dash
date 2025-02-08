@@ -19,11 +19,17 @@ import {
 
 export default function AuthProtected() {
   const id = useSelector((state: User) => state.id);
-  const user_loading = useSelector((state: User) => state.loading);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [checkingAuth, setCheckingAuth] = useState<boolean>(true);
+
   useEffect(() => {
+    if (!checkingAuth) {
+      if (id === undefined) {
+        navigate("/login");
+      }
+    }
+
     async function tryFetchUserData() {
       try {
         // start the user loading process
@@ -43,21 +49,14 @@ export default function AuthProtected() {
         setCheckingAuth(false);
       }
     }
-    if (!id) {
+    if (id === undefined) {
       tryFetchUserData();
     } else {
       setCheckingAuth(false);
     }
-  }, [id, user_loading, setCheckingAuth, navigate, dispatch]);
-  useEffect(() => {
-    if (!checkingAuth) {
-      if (!id) {
-        navigate("/login");
-      }
-    }
-  }, [id, user_loading, checkingAuth, navigate]);
+  }, [id, setCheckingAuth, navigate, dispatch]);
 
-  if (checkingAuth || user_loading || !id) {
+  if (checkingAuth || !id) {
     return <Loading message="Confirming login status" />;
   }
 
