@@ -20,7 +20,6 @@ const router = createBrowserRouter([
     path: "",
     element: <AuthForward />,
     children: [
-      { path: "/logout", element: <Logout /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "", element: <Navigate to="/login" replace={true} /> },
@@ -39,6 +38,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: "/logout", element: <Logout /> },
 ]);
 
 export default function App() {

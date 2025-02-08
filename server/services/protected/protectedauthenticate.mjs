@@ -1,11 +1,11 @@
 import jwt, { decode } from "jsonwebtoken";
-import User from "../services/mongo/models/user.mjs";
+import User from "../mongo/models/user.mjs";
 
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
 export default async function authenticateJWT(req, res, next) {
   // Token from cookies or Authorization header
-  const token = req.cookies.token;
+  const token = req.jwt_token;
   // if no token, return forbidden
   if (!token)
     return res

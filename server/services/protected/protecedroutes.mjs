@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 router.use(authenticateJWT);
-router.get("/callback/success", protectedSendUserData);
+router.get("/getuser", protectedSendUserData);
 router.post("/completeregister", protectedCompleteRegister);
 
 export default router;

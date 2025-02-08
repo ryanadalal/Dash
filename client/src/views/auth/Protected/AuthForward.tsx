@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import { User } from "../../../types/user-types.ts";
-import { getUserData } from "../../../utilities/userAPI.ts";
+import { checkToken, getUserData } from "../../../utilities/userAPI.ts";
 import {
   loginFail,
   saveUserData,
@@ -24,17 +24,19 @@ export default function AuthForward() {
 
   useEffect(() => {
     if (id !== undefined) {
-      console.log("got token navigating");
       navigate("/dashboard");
     }
 
     async function tryFetchUserData() {
       try {
-        // start the user loading process
-        dispatch(updateStart());
-        // call to the api and then forward the response to the slice
-        const response = await getUserData();
-        dispatch(saveUserData(response.data.user));
+        const hasToken = await checkToken();
+        if (hasToken) {
+          // start the user loading process
+          dispatch(updateStart());
+          // call to the api and then forward the response to the slice
+          const response = await getUserData();
+          dispatch(saveUserData(response.data.user));
+        }
       } catch (error: any) {
         dispatch(
           loginFail({
@@ -45,7 +47,6 @@ export default function AuthForward() {
         );
       }
     }
-    console.log(id);
 
     tryFetchUserData();
   }, [id, navigate, dispatch]);

@@ -53,8 +53,8 @@ export const loginUser = async (email: string, password: string) => {
  * Fetch user data using the backends fetch route
  * @returns the user data from the backend
  */
-export const getUserData = () => {
-  return user_api.get("/protected/callback/success");
+export const getUserData = async () => {
+  return user_api.get("/jwt/protected/getuser");
 };
 
 /**
@@ -62,7 +62,7 @@ export const getUserData = () => {
  * @returns backend response
  */
 export const checkToken = () => {
-  return user_api.get("/auth/token");
+  return user_api.get("/jwt/checktoken");
 };
 
 /**
@@ -79,7 +79,7 @@ export const completeRegisterUser = async (
   birthDate: Date
 ) => {
   try {
-    const response = await user_api.post("/protected/completeregister", {
+    const response = await user_api.post("/jwt/protected/completeregister", {
       firstName,
       lastName,
       birthDate,

@@ -5,7 +5,7 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 
 import authrouter from "./services/auth/authroutes.mjs";
-import protectedrouter from "./protected/protecedroutes.mjs";
+import jwtrouter from "./services/jwt/jwtroutes.mjs";
 import connectToDb from "./services/mongo/database.mjs";
 
 const PORT = process.env.SERVER_PORT;
@@ -28,7 +28,7 @@ app.use(cookieParser());
 // initalize passports session which is dependent on express session
 app.use(passport.initialize());
 app.use("/auth", authrouter);
-app.use("/protected", protectedrouter);
+app.use("/jwt", jwtrouter);
 
 // Health check route
 app.get("/health", (req, res) => {

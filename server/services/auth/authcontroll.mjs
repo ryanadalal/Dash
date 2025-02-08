@@ -99,7 +99,7 @@ export const authLogin = async (req, res, next) => {
  * @param {Function} next - The next middleware function in the stack (not used in this function).
  *
  */
-export const authLogout = (req, res) => {
+export const authLogout = async (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production", // use secure tokens for production

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { logout, updateStart } from "../../../utilities/userSlice.ts";
 import Loading from "../../support/Loading.tsx";
-import { logoutUser } from "../../../utilities/userAPI.ts";
+import { checkToken, logoutUser } from "../../../utilities/userAPI.ts";
 import { User } from "../../../types/user-types.ts";
 
 export default function Logout() {
@@ -16,14 +16,19 @@ export default function Logout() {
     if (id === undefined) {
       navigate("/login");
     }
-    console.log("logging out");
     const handleCallback = async () => {
       try {
         dispatch(updateStart());
         // call to the api and then forward the response to the slice
         await logoutUser();
-        // start the user logout process
-        dispatch(logout());
+
+        const interval = setInterval(async () => {
+          const hasToken = await checkToken();
+          if (!hasToken) {
+            clearInterval(interval);
+            dispatch(logout());
+          }
+        }, 1000);
       } catch (error: any) {
         console.error(error);
       }
